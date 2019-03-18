@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bookbooking.Data.Model
+namespace bookbooking.Entity.Model
 {
     public class Book:BaseEntity<int>
     {

@@ -1,4 +1,4 @@
-﻿using bookbooking.Data.Model;
+﻿using bookbooking.Entity.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

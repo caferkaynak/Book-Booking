@@ -16,14 +16,23 @@ namespace bookbooking.Service
         {
             categoryRepository = _repository;
         }
+        public List<Category> CategoryList()
+        {
+          return categoryRepository.GetAll();
+
+        }
         public void AddCategory(Category category)
         {
             categoryRepository.Add(category);
         }
         public void UpdateCategory(Category category)
         {
-            categoryRepository.Update(category);
-                
+            categoryRepository.Update(new Category
+            {
+                Id = category.Id,
+                Name=category.Name 
+            });
+
         }
         public void RemoveCategory(Category category)
         {

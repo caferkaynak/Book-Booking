@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bookbooking.Data
+namespace bookbooking.Entity
 {
     public class BaseEntity
     {
@@ -13,5 +13,12 @@ namespace bookbooking.Data
     public class BaseEntity<T> : BaseEntity
     {
         public T Id { get; set; }
+    }
+}
+
+namespace bookbooking.Entity
+{
+    public class BaseEntity
+    {
     }
 }
