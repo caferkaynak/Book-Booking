@@ -4,9 +4,8 @@ using System.Text;
 
 namespace bookbooking.Data.Model
 {
-    public class User
+    public class User: BaseEntity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string SurName { get; set; }
         public string Tc { get; set; }
