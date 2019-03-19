@@ -7,17 +7,6 @@ namespace bookbooking.Data
     public interface IRepository<T> where T: BaseEntity
     {
         IQueryable<T> GetAll();
-        //IQueryable<Category> Categories { get; }
-        //IQueryable<User> Users { get; }
-        //IQueryable<Book> Books { get; }
-        //IQueryable<Reservation> Reservations { get; }
-        //IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes);
-        //IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
-        //IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
-        //T Get(Expression<Func<T, bool>> predicate);
-        //T Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
-        //Task<T> GetAsync(Expression<Func<T, bool>> predicate);
-        //T Find(object key);
         void Add(T entity);
         void Update(T entity);
         void Remove(T entity);
@@ -30,10 +19,6 @@ namespace bookbooking.Data
         {
             context = _context;
         }
-        //public IQueryable<User> Users => context.Users;
-        //public IQueryable<Book> Books => context.Books;
-        //public IQueryable<Reservation> Reservations => context.Reservations;
-        //public IQueryable<Category> Categories => context.Categories;
         public void Add(T entity)
         {
             dbSet.Add(entity);

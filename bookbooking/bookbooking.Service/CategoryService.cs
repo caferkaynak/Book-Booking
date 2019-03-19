@@ -1,7 +1,9 @@
 ﻿using bookbooking.Data;
 using bookbooking.Data.Model;
+using bookbooking.Entity.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace bookbooking.Service
@@ -16,10 +18,10 @@ namespace bookbooking.Service
         {
             categoryRepository = _repository;
         }
-        public List<Category> CategoryList()
+        public ICollection<Category> CategoryList()
         {
-          return categoryRepository.GetAll();
-
+            return categoryRepository.GetAll().ToList();
+            
         }
         public void AddCategory(Category category)
         {
