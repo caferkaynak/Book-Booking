@@ -15,10 +15,3 @@ namespace bookbooking.Entity
         public T Id { get; set; }
     }
 }
-
-namespace bookbooking.Entity
-{
-    public class BaseEntity
-    {
-    }
-}
