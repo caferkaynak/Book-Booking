@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookbooking.Data", "bookboo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookbooking.Service", "bookbooking.Service\bookbooking.Service.csproj", "{25E28844-B39F-486C-B02C-3F5481E8AE9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookbooking.Entity", "bookbooking.Entity\bookbooking.Entity.csproj", "{96FC19FF-C26E-45E0-9D16-14A7814B2F3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookbooking.Entity", "bookbooking.Entity\bookbooking.Entity.csproj", "{96FC19FF-C26E-45E0-9D16-14A7814B2F3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookbooking.Common", "bookbooking.Common\bookbooking.Common.csproj", "{B42640BF-F420-4D9C-A6AA-EF60B7F481C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookbooking.Common", "bookbooking.Common\bookbooking.Common.csproj", "{B42640BF-F420-4D9C-A6AA-EF60B7F481C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

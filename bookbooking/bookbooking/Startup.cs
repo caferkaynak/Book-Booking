@@ -6,6 +6,7 @@ using bookbooking.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,8 +24,10 @@ namespace bookbooking
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<bookbookingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddMvc();
+            services.AddAuthenticationCore();
             services.AddEntityFrameworkSqlServer();
         }
 
@@ -35,9 +38,17 @@ namespace bookbooking
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseStaticFiles();
-            app.UseMvc().UseMvcWithDefaultRoute();
+            app.UseAuthentication();
+            app.UseMvc(routes =>
+            {
+               routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                          name: "MyArea",
+                          template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

@@ -1,10 +1,7 @@
 ﻿using bookbooking.Data;
-using bookbooking.Data.Model;
 using bookbooking.Entity.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace bookbooking.Service
 {

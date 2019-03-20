@@ -1,14 +1,11 @@
 ﻿using bookbooking.Entity.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace bookbooking.Data
 {
-    public class bookbookingContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public bookbookingContext(DbContextOptions<bookbookingContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }

@@ -1,4 +1,5 @@
 ﻿using bookbooking.Entity;
+using bookbooking.Entity.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -13,9 +14,9 @@ namespace bookbooking.Data
     }
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly bookbookingContext context;
+        private readonly ApplicationDbContext context;
         private readonly DbSet<T> dbSet;
-        public Repository(bookbookingContext _context)
+        public Repository(ApplicationDbContext _context)
         {
             context = _context;
         }
