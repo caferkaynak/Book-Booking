@@ -30,6 +30,7 @@ namespace bookbooking
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICategoryService, CategoryService>();
             services.AddMvc();
             services.AddAuthenticationCore();
             services.AddIdentity<User, IdentityRole>()

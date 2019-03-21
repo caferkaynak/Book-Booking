@@ -16,7 +16,8 @@ namespace bookbooking.Service
     public interface IUserService
     {
         Task<ServiceResult> AddUser(UserView model);
-        
+        Task<ServiceResult> Login(LoginUserView model);
+        void LogOut();
     }
         public class UserService:IUserService
     {
@@ -24,6 +25,8 @@ namespace bookbooking.Service
         private SignInManager<User> singInManager;
         private IPasswordValidator<User> passwordValidator;
         private IPasswordHasher<User> passwordHasher;
+        User user = new User();
+        ServiceResult serviceResult = new ServiceResult();
         public UserService(SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
             IPasswordValidator<User> _passwordValidator)
         {
@@ -34,9 +37,7 @@ namespace bookbooking.Service
         }
         public async Task<ServiceResult> AddUser(UserView model)
         {
-            User user = new User();
-            ServiceResult serviceResult = new ServiceResult();
-           
+            
             user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
             user.PhoneNumber = model.Phone;
             user.UserName = model.Username;
@@ -52,18 +53,22 @@ namespace bookbooking.Service
             }
             return serviceResult;
         }
-            //public async Task<IActionResult> Login(LoginUserView model)
-            //{
-            //    var user = await userManager.FindByNameAsync(model.UserName);
-            //    if (user != null)
-            //    {
-            //        var result = await singInManager.PasswordSignInAsync(user, model.Password, false, false);
-            //        if (result.Succeeded)
-            //        {
-            //            return RedirectToAction("Index", "Category");
-            //        }
-            //    }
-            //    return View();
-            //}
+        public async Task<ServiceResult> Login(LoginUserView model)
+        {
+            var user = await userManager.FindByNameAsync(model.UserName);
+            if (user != null)
+            {
+                var result = await singInManager.PasswordSignInAsync(user, model.Password, false, false);
+                if (result.Succeeded)
+                    serviceResult.sonuc = true;
+                else
+                    serviceResult.sonuc = false;
+            }
+            return serviceResult;
+        }
+        public void LogOut()
+        {
+            singInManager.SignOutAsync();
         }
     }
+}

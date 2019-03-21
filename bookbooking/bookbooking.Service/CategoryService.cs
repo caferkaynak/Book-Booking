@@ -1,4 +1,5 @@
-﻿using bookbooking.Data;
+﻿using bookbooking.Common.ViewModels.Category;
+using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,10 @@ namespace bookbooking.Service
 {
     public interface ICategoryService
     {
+        CategoryView CategoryList();
+        void AddCategory(Category category);
+        void UpdateCategory(Category category);
+        void RemoveCategory(Category category);
     }
     public class CategoryService : ICategoryService
     {
@@ -15,10 +20,11 @@ namespace bookbooking.Service
         {
             categoryRepository = _repository;
         }
-        public ICollection<Category> CategoryList()
+        public CategoryView CategoryList()
         {
-            return categoryRepository.GetAll().ToList();
-            
+            CategoryView categoryView = new CategoryView();
+            categoryView.Categories = categoryRepository.GetAll().ToList();
+            return categoryView;
         }
         public void AddCategory(Category category)
         {

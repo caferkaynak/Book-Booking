@@ -16,6 +16,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
     public class AccountController : Controller
     {
         private IUserService userService;
+        ServiceResult serviceResult = new ServiceResult();
         public AccountController(SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
             IPasswordValidator<User> _passwordValidator, IUserService _userService)
         {
@@ -26,17 +27,18 @@ namespace bookbooking.Web.Areas.Administration.Controllers
             return View();
         }
         [HttpPost]
-        //public async Task<IActionResult> Login(LoginUserView model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        userService.Login(model);
-        //    }
-        //    return View();
-        //}
+        public async Task<IActionResult> Login(LoginUserView model)
+        {
+            if (ModelState.IsValid)
+             serviceResult = await userService.Login(model);
+            if (serviceResult.sonuc == true)
+                return RedirectToAction("Index", "Account");
+            return View();
+        }
         public IActionResult LogOut()
         {
-            return View();
+            userService.LogOut();
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult SingUp()
         {
@@ -44,8 +46,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> SingUp(UserView model)
-        {
-            ServiceResult serviceResult = new ServiceResult();
+        {     
             if (ModelState.IsValid)
            serviceResult = await userService.AddUser(model);
             if (serviceResult.sonuc == true)
