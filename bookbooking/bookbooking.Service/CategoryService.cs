@@ -9,9 +9,9 @@ namespace bookbooking.Service
     public interface ICategoryService
     {
         CategoryView CategoryList();
-        void AddCategory(Category category);
-        void UpdateCategory(Category category);
-        void RemoveCategory(Category category);
+        void AddCategory(CategoryView category);
+        void UpdateCategory(CategoryView category);
+        void RemoveCategory(CategoryView category);
     }
     public class CategoryService : ICategoryService
     {
@@ -26,22 +26,17 @@ namespace bookbooking.Service
             categoryView.Categories = categoryRepository.GetAll().ToList();
             return categoryView;
         }
-        public void AddCategory(Category category)
+        public void AddCategory(CategoryView model)
         {
-            categoryRepository.Add(category);
+            categoryRepository.Add(model.category);
         }
-        public void UpdateCategory(Category category)
+        public void UpdateCategory(CategoryView model)
         {
-            categoryRepository.Update(new Category
-            {
-                Id = category.Id,
-                Name=category.Name 
-            });
-
+            categoryRepository.Update(model.category);
         }
-        public void RemoveCategory(Category category)
+        public void RemoveCategory(CategoryView model)
         {
-            categoryRepository.Remove(category);
+            categoryRepository.Remove(model.category);
         }
     }
 }

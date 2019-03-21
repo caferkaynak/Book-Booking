@@ -1,0 +1,45 @@
+﻿@model CategoryView
+@{
+    ViewData["Title"] = "EditCategory";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="card mx-auto">
+        <div class="card-body">
+            <div class="form-group">
+                <h2>Categories</h2>
+                @foreach (var item in Model.Categories)
+                {
+                    <ul>
+                        <li><h5>@item.Name</h5></li>
+                    </ul>
+                }
+            </div>
+            <form method="post">
+                <div class="form-group">
+                    <h2>Category Update</h2>
+                </div>
+                <div class="form-group">
+
+                    <select class="form-control" asp-for="category.Id">
+                        <option value="0">Kategori Seçiniz</option>
+                        @foreach (var item in Model.Categories)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" asp-for="category.Name" placeholder="Category Name for Update Category" />
+                </div>
+                <div class="form-group">
+                    <input asp-action="Edit" asp-controller="Category" class="form-control" type="submit" value="Update" />
+                </div><div class="form-group">
+                    <input asp-action="Remove" asp-controller="Category" class="form-control" type="submit" value="Delete" />
+                </div>
+            </form>
+            <div asp-validation-summary="All"></div>
+        </div>
+    </div>
+</div>

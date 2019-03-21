@@ -9,6 +9,5 @@ namespace bookbooking.Entity.Entities
         public string Name { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

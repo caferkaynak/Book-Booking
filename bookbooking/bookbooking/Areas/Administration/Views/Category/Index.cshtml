@@ -24,9 +24,9 @@
                     <input class="form-control" type="text" asp-for="category.Name" placeholder="Category Name for New Category" />
                 </div>
                 <div class="form-group">
-                    <input asp-action="CategorySave" asp-controller="Panel" class="form-control" type="submit" value="Create" />
+                    <input asp-action="Add" asp-controller="Category" class="form-control" type="submit" value="Create" />
                 </div><div class="form-group">
-                    <input asp-action="CategoryEdit" asp-controller="Panel" class="form-control" type="submit" value="Edit" />
+                    <input asp-action="Edit" asp-controller="Category" formmethod="get" class="form-control" type="submit" value="Edit" />
                 </div>
             </form>
             <div asp-validation-summary="All"></div>

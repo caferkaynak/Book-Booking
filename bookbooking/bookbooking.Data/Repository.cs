@@ -18,18 +18,22 @@ namespace bookbooking.Data
         public Repository(ApplicationDbContext _context)
         {
             context = _context;
+            dbSet = context.Set<T>();
         }
         public void Add(T entity)
         {
             dbSet.Add(entity);
+            context.SaveChanges();
         }
         public void Update(T entity)
         {
             dbSet.Update(entity);
+            context.SaveChanges();
         }
         public void Remove(T entity)
         {
             dbSet.Remove(entity);
+            context.SaveChanges();
         }
 
         public IQueryable<T> GetAll()
