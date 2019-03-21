@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using bookbooking.Data;
+using bookbooking.Entity.Entities;
+using bookbooking.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,8 +29,12 @@ namespace bookbooking
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IUserService, UserService>();
             services.AddMvc();
             services.AddAuthenticationCore();
+            services.AddIdentity<User, IdentityRole>()
+                   .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
             services.AddEntityFrameworkSqlServer();
         }
 
@@ -40,14 +47,15 @@ namespace bookbooking
             }
             app.UseStaticFiles();
             app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
-               routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
-                          name: "MyArea",
-                          template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                         name: "MyArea",
+                         template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"); 
             });
         }
     }

@@ -1,5 +1,5 @@
 ﻿using bookbooking.Data;
-using bookbooking.Entity.Model;
+using bookbooking.Entity.Entities;
 using System.Collections.Generic;
 using System.Linq;
 

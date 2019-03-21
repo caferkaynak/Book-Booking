@@ -2,49 +2,54 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bookbooking.Common.ViewModels;
+using bookbooking.Common.ViewModels.User;
 using bookbooking.Data;
-using bookbooking.Entity.Model;
+using bookbooking.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using bookbooking.Service;
+using bookbooking.Common.ViewModels;
 
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     public class AccountController : Controller
     {
-        private IRepository<User> repository;
-        private SignInManager<User> singInManager;
-        private UserManager<User> userManager;
-        public AccountController(IRepository<User> _repository, SignInManager<User> _singInManageR, UserManager<User> _userManager)
+        private IUserService userService;
+        public AccountController(SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
+            IPasswordValidator<User> _passwordValidator, IUserService _userService)
         {
-            repository = _repository;
-            singInManager = _singInManageR;
-            userManager = _userManager;
+            userService = _userService;
         }
         public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(UserListView model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await userManager.FindByNameAsync(model.Username);
-                if (user!=null)
-                {
-                    var result = await singInManager.PasswordSignInAsync(user, model.Password, false, false);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Category");
-                    }
-                }
-            }
-            return View();
-        }
+        //public async Task<IActionResult> Login(LoginUserView model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        userService.Login(model);
+        //    }
+        //    return View();
+        //}
         public IActionResult LogOut()
         {
+            return View();
+        }
+        public IActionResult SingUp()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SingUp(UserView model)
+        {
+            ServiceResult serviceResult = new ServiceResult();
+            if (ModelState.IsValid)
+           serviceResult = await userService.AddUser(model);
+            if (serviceResult.sonuc == true)
+                return RedirectToAction("Login", "Account");
             return View();
         }
     }

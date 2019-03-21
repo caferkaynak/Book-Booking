@@ -1,8 +1,7 @@
 ﻿using bookbooking.Entity;
-using bookbooking.Entity.Model;
+using bookbooking.Entity.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-
 namespace bookbooking.Data
 {
     public interface IRepository<T> where T: BaseEntity

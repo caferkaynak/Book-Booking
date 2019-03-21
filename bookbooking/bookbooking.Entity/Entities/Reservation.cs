@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bookbooking.Entity.Model
+namespace bookbooking.Entity.Entities
 {
     public class Reservation: BaseEntity<int>
     {

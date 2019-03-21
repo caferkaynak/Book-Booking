@@ -1,8 +1,10 @@
 ﻿using bookbooking.Common.ViewModels;
+using bookbooking.Common.ViewModels.User;
 using bookbooking.Data;
-using bookbooking.Entity.Model;
+using bookbooking.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,37 +13,57 @@ using System.Threading.Tasks;
 
 namespace bookbooking.Service
 {
-    public class UserService
+    public interface IUserService
     {
-        private readonly IRepository<User> repository;
-        public UserService(IRepository<User> _repository)
-        {
-            repository = _repository;
-        }
-        public ICollection<UserListView> ListUser ()
-        {
-            List<UserListView> userListView = new List<UserListView>();
-            foreach (var item in repository.GetAll())
-            {
-                userListView.Add(
-                    new UserListView() { Username=item.Username, Password=item.Password}
-                    );
-            }
-            return userListView;
-        }
-        public void AddUser(User user)
-        {
-            repository.Add(user);
-        }
-        public void UpdateUser(User user)
-        {
-            repository.Add(user);
-        }
-
-        public void RemoveUser(User user)
-        {
-            repository.Add(user);
-        }
-
+        Task<ServiceResult> AddUser(UserView model);
+        
     }
-}
+        public class UserService:IUserService
+    {
+        private UserManager<User> userManager;
+        private SignInManager<User> singInManager;
+        private IPasswordValidator<User> passwordValidator;
+        private IPasswordHasher<User> passwordHasher;
+        public UserService(SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
+            IPasswordValidator<User> _passwordValidator)
+        {
+            userManager = _userManager;
+            singInManager = _singInManageR;
+            passwordHasher = _passwordHasher;
+            passwordValidator = _passwordValidator;
+        }
+        public async Task<ServiceResult> AddUser(UserView model)
+        {
+            User user = new User();
+            ServiceResult serviceResult = new ServiceResult();
+           
+            user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
+            user.PhoneNumber = model.Phone;
+            user.UserName = model.Username;
+           
+            var passValid = await passwordValidator.ValidateAsync(userManager, user, user.PasswordHash);
+            if (passValid.Succeeded)
+            {
+                var result = await userManager.CreateAsync(user);
+                if (result.Succeeded)
+                    serviceResult.sonuc = true;
+                else
+                    serviceResult.sonuc = false;
+            }
+            return serviceResult;
+        }
+            //public async Task<IActionResult> Login(LoginUserView model)
+            //{
+            //    var user = await userManager.FindByNameAsync(model.UserName);
+            //    if (user != null)
+            //    {
+            //        var result = await singInManager.PasswordSignInAsync(user, model.Password, false, false);
+            //        if (result.Succeeded)
+            //        {
+            //            return RedirectToAction("Index", "Category");
+            //        }
+            //    }
+            //    return View();
+            //}
+        }
+    }

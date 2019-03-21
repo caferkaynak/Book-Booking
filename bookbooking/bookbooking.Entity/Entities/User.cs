@@ -1,13 +1,12 @@
-﻿namespace bookbooking.Entity.Model
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace bookbooking.Entity.Entities
 {
-    public class User:BaseEntity<int>
+    public class User:IdentityUser
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Name { get; set; }
-        public string SurName { get; set; }
-        public string Tc { get; set; }
-        public string Phone { get; set; }
-        public int BirthYear { get; set; }
+        //public string Name { get; set; }
+        //public string SurName { get; set; }
+        //public string Tc { get; set; }
+        //public int BirthYear { get; set; }
     }
 }
