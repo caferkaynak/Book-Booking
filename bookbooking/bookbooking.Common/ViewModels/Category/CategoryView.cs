@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using bookbooking.Entity;
+using bookbooking.Entity.Entities;
 
 namespace bookbooking.Common.ViewModels.Category
 {
