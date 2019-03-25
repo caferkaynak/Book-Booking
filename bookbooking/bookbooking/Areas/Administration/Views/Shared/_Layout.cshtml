@@ -17,7 +17,7 @@
         <div class="bg-light border-right" id="sidebar-wrapper">
             <div class="sidebar-heading">Book Booking Admin</div>
             <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action bg-light">Kütüphane</a>
+                <a asp-action="Index" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Kütüphane</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Rezervasyon</a>
                 <a asp-action="Index" asp-controller="Category" class="list-group-item list-group-item-action bg-light">Kategori</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
@@ -49,7 +49,7 @@
                                 <a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <div class="dropdown-divider"></div>
-                                <a asp-action="LogOut" asp-controller="Account" class="dropdown-item" href="#">Log Out</a>
+                                <a asp-action="LogOut" asp-controller="Account" class="dropdown-item">Log Out</a>
                             </div>
                         </li>
                     </ul>
