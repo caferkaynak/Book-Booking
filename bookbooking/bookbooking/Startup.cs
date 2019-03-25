@@ -31,7 +31,6 @@ namespace bookbooking
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<ILibraryService, LibraryService>();
             services.AddMvc();
             services.AddAuthenticationCore();
             services.AddIdentity<User, IdentityRole>()

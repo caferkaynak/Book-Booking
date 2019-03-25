@@ -126,14 +126,12 @@ namespace bookbooking.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("bookbooking.Entity.Entities.Book", b =>
+            modelBuilder.Entity("bookbooking.Entity.Model.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CategoryId");
-
-                    b.Property<string>("ImageName");
 
                     b.Property<string>("Name");
 
@@ -144,7 +142,7 @@ namespace bookbooking.Data.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("bookbooking.Entity.Entities.Category", b =>
+            modelBuilder.Entity("bookbooking.Entity.Model.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -156,7 +154,7 @@ namespace bookbooking.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("bookbooking.Entity.Entities.Reservation", b =>
+            modelBuilder.Entity("bookbooking.Entity.Model.Reservation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -180,12 +178,14 @@ namespace bookbooking.Data.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("bookbooking.Entity.Entities.User", b =>
+            modelBuilder.Entity("bookbooking.Entity.Model.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<int>("BirthYear");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -198,6 +198,8 @@ namespace bookbooking.Data.Migrations
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -212,6 +214,10 @@ namespace bookbooking.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("SurName");
+
+                    b.Property<string>("Tc");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -241,7 +247,7 @@ namespace bookbooking.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("bookbooking.Entity.Entities.User")
+                    b.HasOne("bookbooking.Entity.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -249,7 +255,7 @@ namespace bookbooking.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("bookbooking.Entity.Entities.User")
+                    b.HasOne("bookbooking.Entity.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -262,7 +268,7 @@ namespace bookbooking.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("bookbooking.Entity.Entities.User")
+                    b.HasOne("bookbooking.Entity.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -270,28 +276,28 @@ namespace bookbooking.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("bookbooking.Entity.Entities.User")
+                    b.HasOne("bookbooking.Entity.Model.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("bookbooking.Entity.Entities.Book", b =>
+            modelBuilder.Entity("bookbooking.Entity.Model.Book", b =>
                 {
-                    b.HasOne("bookbooking.Entity.Entities.Category", "Category")
-                        .WithMany()
+                    b.HasOne("bookbooking.Entity.Model.Category", "Category")
+                        .WithMany("Books")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("bookbooking.Entity.Entities.Reservation", b =>
+            modelBuilder.Entity("bookbooking.Entity.Model.Reservation", b =>
                 {
-                    b.HasOne("bookbooking.Entity.Entities.Book", "Book")
-                        .WithMany()
+                    b.HasOne("bookbooking.Entity.Model.Book", "Book")
+                        .WithMany("Reservations")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("bookbooking.Entity.Entities.User", "User")
+                    b.HasOne("bookbooking.Entity.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId1");
                 });
