@@ -1,0 +1,12 @@
+﻿body {
+}
+a#menu a:hover {
+    color: #a00;
+    background: #fff;
+}
+a#menu a:hover a {
+    display: block;
+}
+a#menu a:hover a, a#menu a.over a {
+    display: block;
+}

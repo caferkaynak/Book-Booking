@@ -8,6 +8,7 @@ namespace bookbooking.Entity.Entities
     {
         public string Name { get; set; }
         public string ImageName { get; set; }
+        public string Author { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
     }

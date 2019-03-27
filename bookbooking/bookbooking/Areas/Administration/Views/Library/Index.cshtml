@@ -14,6 +14,7 @@
                     <thead>
                         <tr>
                             <td>Kitap Adı</td>
+                            <td>Yazar</td>
                             <td>Resim</td>
                             <td>Kategori</td>
                             <td>Update</td>
@@ -24,6 +25,7 @@
                         {
                             <tr>
                                 <td>@item.Name</td>
+                                <td>@item.Author</td>
                                 <td><img src="~/Image/@item.ImageName" width="100" /></td>
                                 <td>
                                     @item.Category.Name

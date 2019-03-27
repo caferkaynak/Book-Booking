@@ -49,7 +49,7 @@ namespace bookbooking
             }
             app.UseStaticFiles();
             app.UseAuthentication();
-
+            app.UseStatusCodePages();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

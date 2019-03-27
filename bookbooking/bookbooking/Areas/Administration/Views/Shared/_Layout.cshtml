@@ -5,24 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>Book Booking Admin</title>
     <!-- Bootstrap core CSS -->
     <link href="~/Css/Bootstrap/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="~/Css/simple-sidebar.css" rel="stylesheet" />
+    <link href="~/Css/Style.css" rel="stylesheet" />
 </head>
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Book Booking Admin</div>
+            <div class="sidebar-heading"><a asp-action="Index" asp-controller="Account">Book Booking Admin</a></div>
             <div class="list-group list-group-flush">
-                <a asp-action="Index" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Kütüphane</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Rezervasyon</a>
+                <button class="list-group-item list-group-item-action bg-light" type="button" id="Library" data-toggle="dropdown" aria-expanded="true">
+                    Kütüphane
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="Library">
+                    <li role="presentation"><a asp-action="Index" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Kitap Listesi</a></li>
+                    <li role="presentation"><a asp-action="Add" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Kitap Ekle</a></li>
+                </ul>
                 <a asp-action="Index" asp-controller="Category" class="list-group-item list-group-item-action bg-light">Kategori</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Rezervasyon</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->

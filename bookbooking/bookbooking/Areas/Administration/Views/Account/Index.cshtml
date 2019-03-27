@@ -1,0 +1,27 @@
+﻿@model UserView
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <table>
+        <tr>
+            <td>ID :</td>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <td>Username :</td>
+            <td>@Model.Username</td>
+        </tr>
+        <tr>
+            <td>Mail :</td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td>Phone :</td>
+            <td>@Model.Phone</td>
+        </tr>
+    </table>
+</div>
+

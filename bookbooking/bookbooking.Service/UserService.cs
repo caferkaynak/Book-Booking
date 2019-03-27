@@ -15,6 +15,7 @@ namespace bookbooking.Service
 {
     public interface IUserService
     {
+        UserView ListUser(string username);
         Task<ServiceResult> AddUser(UserView model);
         Task<ServiceResult> Login(LoginUserView model);
         void LogOut();
@@ -35,13 +36,22 @@ namespace bookbooking.Service
             passwordHasher = _passwordHasher;
             passwordValidator = _passwordValidator;
         }
+        public UserView ListUser(string username)
+        {
+            UserView userView = new UserView();
+            var item = userManager.Users.Where(w => w.UserName == username).FirstOrDefault();
+            userView.Id = item.Id;
+            userView.Username = item.UserName;
+            userView.Email = item.Email;
+            userView.Phone = item.PhoneNumber;
+            return userView;
+        }
         public async Task<ServiceResult> AddUser(UserView model)
         {
-            
             user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
             user.PhoneNumber = model.Phone;
             user.UserName = model.Username;
-           
+            user.Email = model.Email;
             var passValid = await passwordValidator.ValidateAsync(userManager, user, user.PasswordHash);
             if (passValid.Succeeded)
             {

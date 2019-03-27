@@ -23,7 +23,6 @@ namespace bookbooking.Service
         Task<ServiceResult> UpdateBook(BookView model, IFormFile file);
         void RemoveBook(int id);
     }
-
     public class LibraryService : ILibraryService
     {
         private IRepository<Book> bookRepository;
@@ -36,8 +35,7 @@ namespace bookbooking.Service
             categoryRepository = _categoryRepository;
         }
         public BookView BookList()
-        {
-            
+        {            
             bookView.Books = bookRepository.GetAll().Include(i => i.Category).ToList();
             bookView.categories = categoryRepository.GetAll().ToList();
             return bookView;

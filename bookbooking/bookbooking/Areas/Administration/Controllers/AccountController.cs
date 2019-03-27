@@ -22,6 +22,12 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         {
             userService = _userService;
         }
+
+        public IActionResult Index()
+        {
+            return View(userService.ListUser(User.Identity.Name));
+        }
+
         public IActionResult Login()
         {
             return View();
