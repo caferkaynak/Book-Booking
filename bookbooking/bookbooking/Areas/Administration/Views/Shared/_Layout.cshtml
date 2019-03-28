@@ -24,9 +24,12 @@
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="Library">
                     <li role="presentation"><a asp-action="Index" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Kitap Listesi</a></li>
-                    <li role="presentation"><a asp-action="Add" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Kitap Ekle</a></li>
+                    <li role="presentation"><a asp-action="AddBook" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Kitap Ekle</a></li>
+                    <li role="presentation"><a asp-action="AddAuthor" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Yazar Ekle</a></li>
+                    <li role="presentation"><a asp-action="UpdateAuthor" asp-controller="Library" class="list-group-item list-group-item-action bg-light">Yazar Güncelle</a></li>
                 </ul>
                 <a asp-action="Index" asp-controller="Category" class="list-group-item list-group-item-action bg-light">Kategori</a>
+                <a asp-action="Index" asp-controller="Roles" class="list-group-item list-group-item-action bg-light">Roles</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Rezervasyon</a>
             </div>
         </div>

@@ -4,13 +4,9 @@ using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using bookbooking.Service.Helpers;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace bookbooking.Service
@@ -21,30 +17,37 @@ namespace bookbooking.Service
         BookView UpdateBookList(int id);
         Task<ServiceResult> AddBook(BookView model,IFormFile file);
         Task<ServiceResult> UpdateBook(BookView model, IFormFile file);
+        void AddAuthor(BookView model);
+        void UpdateAuthor(BookView model);
+        void RemoveAuthor(BookView model);
         void RemoveBook(int id);
     }
     public class LibraryService : ILibraryService
     {
         private IRepository<Book> bookRepository;
         private IRepository<Category> categoryRepository;
+        private IRepository<Author> authorRepository;
         ServiceResult serviceResult = new ServiceResult();
         BookView bookView = new BookView();
-        public LibraryService(IRepository<Book> _bookRepository, IRepository<Category> _categoryRepository)
+        public LibraryService(IRepository<Book> _bookRepository, IRepository<Category> _categoryRepository, IRepository<Author> _authorRepository)
         {
             bookRepository = _bookRepository;
             categoryRepository = _categoryRepository;
+            authorRepository = _authorRepository;
         }
         public BookView BookList()
-        {            
-            bookView.Books = bookRepository.GetAll().Include(i => i.Category).ToList();
-            bookView.categories = categoryRepository.GetAll().ToList();
+        { 
+            bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i => i.Author).ToList();
+            bookView.Categories = categoryRepository.GetAll().ToList();
+            bookView.Authors = authorRepository.GetAll().ToList();
             return bookView;
         }
         public BookView UpdateBookList(int id)
         {
             bookView.Book = bookRepository.GetAll().Where(w => w.Id == id).FirstOrDefault();
-            bookView.Books = bookRepository.GetAll().Include(i => i.Category).ToList();
-            bookView.categories = categoryRepository.GetAll().ToList();
+            bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i=>i.Author).ToList();
+            bookView.Categories = categoryRepository.GetAll().ToList();
+            bookView.Authors = authorRepository.GetAll().ToList();
             return bookView;
         }
         public async Task<ServiceResult> AddBook(BookView model, IFormFile file)
@@ -57,7 +60,7 @@ namespace bookbooking.Service
                 {
                     await file.CopyToAsync(stream);
                     model.Book.ImageName = file.FileName;
-                    serviceResult.sonuc = true;
+                    serviceResult.Sonuc = true;
                 }
             }
                 bookRepository.Add(model.Book);
@@ -71,7 +74,7 @@ namespace bookbooking.Service
             {
                 await file.CopyToAsync(stream);
                 model.Book.ImageName = file.FileName;
-                serviceResult.sonuc = true;
+                serviceResult.Sonuc = true;
             }
             bookRepository.Update(model.Book);
             return serviceResult;
@@ -79,6 +82,18 @@ namespace bookbooking.Service
         public void RemoveBook(int id)
         {
             bookRepository.Remove(bookRepository.GetAll().Where(w => w.Id == id).FirstOrDefault());
+        }
+        public void AddAuthor(BookView model)
+        {
+            authorRepository.Add(model.Author);
+        }
+        public void UpdateAuthor(BookView model)
+        {
+            authorRepository.Update(model.Author);
+        }
+        public void RemoveAuthor(BookView model)
+        {
+            authorRepository.Remove(model.Author);
         }
     }
 }

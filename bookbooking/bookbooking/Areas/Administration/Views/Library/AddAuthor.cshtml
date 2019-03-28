@@ -1,6 +1,6 @@
-﻿@model CategoryView
+﻿@model BookView
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "AddAuthor";
     Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,8 +8,8 @@
     <div class="card mx-auto">
         <div class="card-body">
             <div class="form-group">
-                <h2>Kategoriler</h2>
-                @foreach (var item in Model.Categories)
+                <h2>Yazarlar</h2>
+                @foreach (var item in Model.Authors)
                 {
                     <ul>
                         <li><h5>@item.Name</h5></li>
@@ -18,15 +18,15 @@
             </div>
             <form method="post">
                 <div class="form-group">
-                    <h2>Kategori Ekle</h2>
+                    <h2>Yazar Ekle</h2>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" asp-for="Category.Name" placeholder="Kategori Adı" />
+                    <input class="form-control" type="text" asp-for="Author.Name" placeholder="New Author " />
                 </div>
                 <div class="form-group">
-                    <input asp-action="Add" asp-controller="Category" class="form-control" type="submit" value="Ekle" />
+                    <input asp-action="AddAuthor" asp-controller="Library" class="form-control" type="submit" value="Ekle" />
                 </div><div class="form-group">
-                    <input asp-action="Edit" asp-controller="Category" formmethod="get" class="form-control" type="submit" value="Güncelle" />
+                    <input asp-action="UpdateAuthor" asp-controller="Library" formmethod="get" class="form-control" type="submit" value="Güncelle" />
                 </div>
             </form>
             <div asp-validation-summary="All"></div>

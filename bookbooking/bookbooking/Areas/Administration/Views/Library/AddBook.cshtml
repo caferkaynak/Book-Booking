@@ -1,25 +1,31 @@
 ﻿@model BookView
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "AddBook";
     Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
 }
 <div class="container mt-3">
     <div class="card mx-auto">
         <div class="card-body">
-            <form asp-action="Add" asp-controller="Library" method="post" enctype="multipart/form-data">
+            <form asp-action="AddBook" asp-controller="Library" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <h2>Add Book</h2>
+                    <h2>Kitap Ekle</h2>
                 </div>
                 <div class="form-group">
                     <input asp-for="Book.Name" class="form-control" placeholder="Name" />
                 </div>
                 <div class="form-group">
-                    <input asp-for="Book.Author" class="form-control" placeholder="Author" />
+                    <select asp-for="Book.AuthorId" class="form-control">
+                        <option disabled selected value="">Yazar Seçin</option>
+                        @foreach (var item in Model.Authors)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
                 </div>
                 <div class="form-group">
                     <select asp-for="Book.CategoryId" class="form-control">
-                        <option disabled selected value="">Select Category</option>
-                        @foreach (var item in Model.categories)
+                        <option disabled selected value="">Kategori Seçin</option>
+                        @foreach (var item in Model.Categories)
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
@@ -29,7 +35,10 @@
                     <input type="file" name="file" id="file" class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="form-control" value="Add" />
+                    <input type="submit" class="form-control" value="Ekle" />
+                </div>
+                <div class="form-group">
+                    <input asp-action="Index" asp-controller="Library" type="submit" class="form-control" value="Detay" />
                 </div>
             </form>
             <div asp-validation-summary="All"></div>

@@ -32,6 +32,7 @@ namespace bookbooking
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ILibraryService, LibraryService>();
+            services.AddTransient<IRolesService, RolesService>();
             services.AddMvc();
             services.AddAuthenticationCore();
             services.AddIdentity<User, IdentityRole>()

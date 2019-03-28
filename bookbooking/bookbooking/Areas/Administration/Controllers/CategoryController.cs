@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using bookbooking.Common.ViewModels.Category;
+﻿using bookbooking.Common.ViewModels.Category;
 using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using bookbooking.Service;

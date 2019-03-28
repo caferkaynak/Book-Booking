@@ -10,8 +10,8 @@ using bookbooking.Data;
 namespace bookbooking.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190327002444_Book_Author")]
-    partial class Book_Author
+    [Migration("20190327150005_AddAuthor_")]
+    partial class AddAuthor_
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,12 +128,24 @@ namespace bookbooking.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("bookbooking.Entity.Entities.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("bookbooking.Entity.Entities.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Author");
+                    b.Property<int>("AuthorId");
 
                     b.Property<int>("CategoryId");
 
@@ -142,6 +154,8 @@ namespace bookbooking.Data.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("CategoryId");
 
@@ -282,6 +296,11 @@ namespace bookbooking.Data.Migrations
 
             modelBuilder.Entity("bookbooking.Entity.Entities.Book", b =>
                 {
+                    b.HasOne("bookbooking.Entity.Entities.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("bookbooking.Entity.Entities.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")

@@ -1,14 +1,8 @@
 ﻿using bookbooking.Common.ViewModels;
 using bookbooking.Common.ViewModels.User;
-using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace bookbooking.Service
@@ -57,9 +51,9 @@ namespace bookbooking.Service
             {
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
-                    serviceResult.sonuc = true;
+                    serviceResult.Sonuc = true;
                 else
-                    serviceResult.sonuc = false;
+                    serviceResult.Sonuc = false;
             }
             return serviceResult;
         }
@@ -70,9 +64,9 @@ namespace bookbooking.Service
             {
                 var result = await singInManager.PasswordSignInAsync(user, model.Password, false, false);
                 if (result.Succeeded)
-                    serviceResult.sonuc = true;
+                    serviceResult.Sonuc = true;
                 else
-                    serviceResult.sonuc = false;
+                    serviceResult.Sonuc = false;
             }
             return serviceResult;
         }

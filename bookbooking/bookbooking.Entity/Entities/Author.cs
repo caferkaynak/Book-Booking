@@ -2,8 +2,9 @@
 
 namespace bookbooking.Entity.Entities
 {
-    public class Category:BaseEntity<int>
-    {   [Required]
+    public class Author :BaseEntity<int>
+    {
+        [Required]
         public string Name { get; set; }
     }
 }

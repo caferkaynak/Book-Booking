@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace bookbooking.Common.ViewModels.User
+﻿namespace bookbooking.Common.ViewModels.User
 {
     public class UserView
     {

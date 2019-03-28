@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace bookbooking.Entity.Entities
 {
     public class Book:BaseEntity<int>
     {
+        [Required]
         public string Name { get; set; }
         public string ImageName { get; set; }
-        public string Author { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public int AuthorId { get; set; }
+        public virtual Author Author { get; set; }
     }
 }

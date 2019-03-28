@@ -5,7 +5,7 @@
 }
 
 <div class="container mt-3">
-    <h2>Blog list</h2>
+    <h2>Kitaplar</h2>
     <div class="row">
         <div class="col">
             @if (Model.Books.Count > 0)
@@ -25,13 +25,13 @@
                         {
                             <tr>
                                 <td>@item.Name</td>
-                                <td>@item.Author</td>
+                                <td>@item.Author.Name</td>
                                 <td><img src="~/Image/@item.ImageName" width="100" /></td>
                                 <td>
                                     @item.Category.Name
                                 </td>
-                                <td><a asp-action="Update" asp-controller="Library" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Edit</a></td>
-                                <td><a asp-action="Remove" asp-controller="Library" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Delete</a></td>
+                                <td><a asp-action="UpdateBook" asp-controller="Library" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Edit</a></td>
+                                <td><a asp-action="RemoveBook" asp-controller="Library" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Delete</a></td>
                             </tr>
                         }
                     </tbody>
@@ -40,7 +40,7 @@
             else
             {
                 <div class="alert alert-danger">
-                    Hiç Entry Yoktur
+                    Hiç Kitap Yok
                 </div>
             }
 

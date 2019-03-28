@@ -1,14 +1,14 @@
-﻿@model CategoryView
+﻿@model BookView
 @{
-    ViewData["Title"] = "EditCategory";
+    ViewData["Title"] = "Update Author";
     Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
 }
 <div class="container mt-3">
     <div class="card mx-auto">
         <div class="card-body">
             <div class="form-group">
-                <h2>Kategoriler</h2>
-                @foreach (var item in Model.Categories)
+                <h2>Yazarlar</h2>
+                @foreach (var item in Model.Authors)
                 {
                     <ul>
                         <li><h5>@item.Name</h5></li>
@@ -17,24 +17,24 @@
             </div>
             <form method="post">
                 <div class="form-group">
-                    <h2>Kategori Güncelle</h2>
+                    <h2>Yazarı Güncelle</h2>
                 </div>
                 <div class="form-group">
-                    <select class="form-control" asp-for="Category.Id">
-                        <option value="">Kategori Seçiniz</option>
-                        @foreach (var item in Model.Categories)
+                    <select class="form-control" asp-for="Author.Id">
+                        <option value="">Yazar Seçiniz</option>
+                        @foreach (var item in Model.Authors)
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
                     </select>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" asp-for="Category.Name" placeholder="Yeni Kategori Adı" />
+                    <input class="form-control" type="text" asp-for="Author.Name" placeholder="Category Name for Update Category" />
                 </div>
                 <div class="form-group">
-                    <input asp-area="Administration" asp-action="Edit" asp-controller="Category" class="form-control" type="submit" value="Güncelle" />
+                    <input asp-area="Administration" asp-action="UpdateAuthor" asp-controller="Library" class="form-control" type="submit" value="Update" />
                 </div><div class="form-group">
-                    <input  asp-area="Administration" asp-action="Remove" asp-controller="Category" class="form-control" type="submit" value="Sil" />
+                    <input asp-area="Administration" asp-action="RemoveAuthor" asp-controller="Library" class="form-control" type="submit" value="Delete" />
                 </div>
             </form>
             <div asp-validation-summary="All"></div>

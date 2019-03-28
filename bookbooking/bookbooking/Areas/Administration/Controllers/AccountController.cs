@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using bookbooking.Common.ViewModels.User;
-using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -30,17 +26,22 @@ namespace bookbooking.Web.Areas.Administration.Controllers
 
         public IActionResult Login()
         {
-            return View();
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return View();
         }
+            return RedirectToAction("Index", "Account");
+    }
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserView model)
-        {
+        { 
             if (ModelState.IsValid)
              serviceResult = await userService.Login(model);
-            if (serviceResult.sonuc == true)
+            if (serviceResult.Sonuc == true)
                 return RedirectToAction("Index", "Account");
             return View();
         }
+        [Route("default")]
         public IActionResult LogOut()
         {
             userService.LogOut();
@@ -55,7 +56,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         {     
             if (ModelState.IsValid)
            serviceResult = await userService.AddUser(model);
-            if (serviceResult.sonuc == true)
+            if (serviceResult.Sonuc == true)
                 return RedirectToAction("Login", "Account");
             return View();
         }
