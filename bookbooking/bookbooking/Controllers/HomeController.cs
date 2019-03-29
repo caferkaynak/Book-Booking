@@ -18,7 +18,9 @@ namespace bookbooking.Web.Controllers
         public IActionResult Index()
         {
             ViewBag.Category = new List<Category>();
-            ViewBag.Category = categoryService.CategoryList().Categories.ToList();  
+            ViewBag.Author = new List<Author>();
+            ViewBag.Category = categoryService.CategoryList().Categories.ToList();
+            ViewBag.Author = libraryService.BookList().Authors.ToList();
             return View(libraryService.BookList());
         }
     }

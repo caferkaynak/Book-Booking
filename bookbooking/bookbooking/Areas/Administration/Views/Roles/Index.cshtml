@@ -3,16 +3,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
 }
-
 <div class="container mt-3">
     <div class="row">
         <div class="col">
             <div class="bg-primary text-white p-1 m-1">
                 <h2>Role List</h2>
             </div>
-
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-
             <table class="table table-bordered table-striped table-sm m-1 p-1">
                 <tr>
                     <th>Role Id</th>
@@ -37,16 +34,15 @@
                             <td>@role.Name</td>
                             <td identity-role="@role.Id"></td>
                             <td>
-                                <form asp-route-id="@role.Id" asp-action="Delete" method="post">
-                                    <a asp-action="Update" asp-route-id="@role.Id" class="btn btn-primary">Update</a>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                <form>
+                                    <input type="submit" formmethod="get" asp-action="Update" asp-controller="Roles" class="btn btn-primary" asp-route-id="@role.Id"value="Update">
+                                    <a asp-action="Delete" asp-controller="Roles" class="btn btn-danger" asp-route-id="@role.Id">Delete</a>
                                 </form>
-                            </td>
+                                    </td>
                         </tr>
                     }
                 }
             </table>
-
             <a asp-action="Add" class="btn btn-primary">
                 Create User
             </a>

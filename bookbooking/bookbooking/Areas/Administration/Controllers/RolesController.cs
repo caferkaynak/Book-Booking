@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using bookbooking.Common.ViewModels;
+using bookbooking.Common.ViewModels.User;
 using bookbooking.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,30 @@ namespace bookbooking.Web.Areas.Administration.Controllers
                 }
             }
             return View();
+        }
+        public async Task<IActionResult> Update(string id)
+        {
+            IdentityRole ıdentityRole = new IdentityRole();
+            ıdentityRole = await rolesService.UpdateListRole(id);
+            return View(ıdentityRole);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(IdentityRole ıdentityRole)
+        {
+            if (ModelState.IsValid)
+            {
+                await rolesService.UpdateRole(ıdentityRole);
+                if (serviceResult.Sonuc == true)
+                    return RedirectToAction("Index", "Roles");
+                ModelState.AddModelError("Succeeced", "Başarılı");
+            }
+            return View(ıdentityRole);
+        }
+        public async Task<IActionResult> Delete(string id)
+        {
+            serviceResult = await rolesService.DeleteRole(id);
+            ModelState.AddModelError("Succeeced", serviceResult.Message);
+            return RedirectToAction("Index", "Roles");
         }
     }
 }

@@ -1,0 +1,25 @@
+﻿@model IdentityRole
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col">
+            <div class="bg-primary text-white p-1 m-1">
+                <h2>Update Role</h2> 
+            </div>
+            <form class="m-1 p-1" method="post">
+                <div class="form-group">
+                    <label form="name">Role Name</label>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="text" asp-for="Name" class="form-control" />
+                </div>
+                <input asp-action="Update" asp-controller="Roles" type="submit" class="btn btn-primary" value="Submit" />
+                <a asp-action="Index" asp-controller="Roles" class="btn btn-danger">Cancel</a>
+                <div class="text-danger" asp-validation-summary="All"></div>
+            </form>
+        </div>
+    </div>
+</div>

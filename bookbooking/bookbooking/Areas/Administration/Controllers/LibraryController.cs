@@ -35,12 +35,22 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBook(BookView model, IFormFile file)
         {
-            serviceResult = await libraryService.AddBook(model, file);
-            if (serviceResult.Sonuc == true)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Succeeded", "Succeeded");
+                if (file==null)
+                {
+                    ModelState.AddModelError("NullFile", "Dosya Seçilmedi");
+                    return View(libraryService.BookList());
+                }
+                else
+                { 
+                serviceResult = await libraryService.AddBook(model, file);
+                if (serviceResult.Sonuc == true)
+                    ModelState.AddModelError("Succeeded", "Kitap Eklendi");
+                return View(libraryService.BookList());
+                }
             }
-            return View(libraryService.BookList());
+            return View();
         }
         public IActionResult Update(int id)
         {
@@ -49,8 +59,12 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateBook(BookView model, IFormFile file)
         {
-            serviceResult = await libraryService.UpdateBook(model, file);
-            return RedirectToAction("Index", "Library");
+            if (ModelState.IsValid)
+            {
+                serviceResult = await libraryService.UpdateBook(model, file);
+                return RedirectToAction("Index", "Library");
+            }
+            return View(libraryService.UpdateBookList(model.Book.Id));
         }
         public IActionResult RemoveBook(int id)
         {
@@ -59,12 +73,18 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         }
         public IActionResult AddAuthor()
         {
+
             return View(libraryService.BookList());
+
         }
         [HttpPost]
         public IActionResult AddAuthor(BookView model)
         {
-            libraryService.AddAuthor(model);
+            if (ModelState.IsValid)
+            {
+                libraryService.AddAuthor(model);
+                return View(libraryService.BookList());
+            }
             return View(libraryService.BookList());
         }
         public IActionResult UpdateAuthor()
@@ -74,14 +94,22 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult UpdateAuthor(BookView model)
         {
-            libraryService.UpdateAuthor(model);
+            if (ModelState.IsValid)
+            {
+                libraryService.UpdateAuthor(model);
+                return View(libraryService.BookList());
+            }
             return View(libraryService.BookList());
         }
         [HttpPost]
         public IActionResult RemoveAuthor(BookView model)
         {
-            libraryService.RemoveAuthor(model);
-            return RedirectToAction("UpdateAuthor","Library");
+            if (ModelState.IsValid)
+            {
+                libraryService.RemoveAuthor(model);
+                return RedirectToAction("UpdateAuthor", "Library");
+            }
+            return RedirectToAction("UpdateAuthor", "Library");
         }
     }
 }

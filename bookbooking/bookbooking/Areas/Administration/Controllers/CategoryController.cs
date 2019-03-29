@@ -21,7 +21,11 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult Add(CategoryView categoryView)
         {
-            categoryService.AddCategory(categoryView);
+            if (ModelState.IsValid)
+            {
+                categoryService.AddCategory(categoryView);
+                return RedirectToAction("Index", "Category");
+            }
             return RedirectToAction("Index", "Category");
         }
         public IActionResult Edit()
@@ -31,14 +35,22 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult Edit(CategoryView categoryView)
         {
-            categoryService.UpdateCategory(categoryView);
+            if (ModelState.IsValid)
+            {
+                categoryService.UpdateCategory(categoryView);
+                return View(categoryService.CategoryList());
+            }
             return View(categoryService.CategoryList());
         }
         [HttpPost]
         public IActionResult Remove(CategoryView categoryView)
         {
-            categoryService.RemoveCategory(categoryView);
-            return RedirectToAction("Edit","Category");
+            if (ModelState.IsValid)
+            {
+                categoryService.RemoveCategory(categoryView);
+                return RedirectToAction("Edit", "Category");
+            }
+            return RedirectToAction("Edit", "Category");
         }
     }
 }

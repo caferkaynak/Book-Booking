@@ -36,7 +36,7 @@ namespace bookbooking.Service
             authorRepository = _authorRepository;
         }
         public BookView BookList()
-        { 
+        {      
             bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i => i.Author).ToList();
             bookView.Categories = categoryRepository.GetAll().ToList();
             bookView.Authors = authorRepository.GetAll().ToList();

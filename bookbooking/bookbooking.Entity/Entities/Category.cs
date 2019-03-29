@@ -3,7 +3,7 @@
 namespace bookbooking.Entity.Entities
 {
     public class Category:BaseEntity<int>
-    {   [Required]
+    {   [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
     }
 }
