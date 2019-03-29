@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-group">
                     <select asp-for="Book.AuthorId" class="form-control">
-                        <option disabled selected value="">Yazar Seçin</option>
+                        <option value="">Yazar Seçin</option>
                         @foreach (var item in Model.Authors)
                         {
                             <option value="@item.Id">@item.Name</option>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <select asp-for="Book.CategoryId" class="form-control">
-                        <option disabled selected value="">Kategori Seçin</option>
+                        <option value="">Kategori Seçin</option>
                         @foreach (var item in Model.Categories)
                         {
                             <option value="@item.Id">@item.Name</option>

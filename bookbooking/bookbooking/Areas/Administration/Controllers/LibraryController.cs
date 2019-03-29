@@ -50,7 +50,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
                 return View(libraryService.BookList());
                 }
             }
-            return View();
+            return View(libraryService.BookList());
         }
         public IActionResult Update(int id)
         {
