@@ -45,7 +45,11 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult Remove(CategoryView categoryView)
         {
+            if (categoryView.Category.Id!=0)
+            {
                 categoryService.RemoveCategory(categoryView);
+                return RedirectToAction("Edit", "Category");
+            }
                 return RedirectToAction("Edit", "Category");
         }
     }

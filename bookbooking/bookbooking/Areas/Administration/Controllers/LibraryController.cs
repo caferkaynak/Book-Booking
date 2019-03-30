@@ -23,7 +23,6 @@ namespace bookbooking.Web.Areas.Administration.Controllers
             bookRepository = _bookRepository;
             authorRepository = _authorRepository;
         }
-
         public IActionResult Index()
         {
             return View(libraryService.BookList());
@@ -52,7 +51,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
             }
             return View(libraryService.BookList());
         }
-        public IActionResult Update(int id)
+        public IActionResult UpdateBook(int id)
         {
             return View(libraryService.UpdateBookList(id));
         }

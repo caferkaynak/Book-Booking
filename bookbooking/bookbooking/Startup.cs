@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using bookbooking.Data;
+﻿using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using bookbooking.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +23,7 @@ namespace bookbooking
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IUserService, UserService>();
+            services.AddSingleton<IUserService,UserService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ILibraryService, LibraryService>();
             services.AddTransient<IRolesService, RolesService>();
@@ -60,6 +54,7 @@ namespace bookbooking
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}"); 
             });
+            SeedData.Seed(app);
         }
     }
 }

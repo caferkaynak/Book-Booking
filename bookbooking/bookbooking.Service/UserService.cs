@@ -2,6 +2,7 @@
 using bookbooking.Common.ViewModels.User;
 using bookbooking.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,28 +10,30 @@ namespace bookbooking.Service
 {
     public interface IUserService
     {
-        UserView ListUser(string username);
+        UserView User(string username);
         Task<ServiceResult> AddUser(UserView model);
         Task<ServiceResult> Login(LoginUserView model);
         void LogOut();
     }
-        public class UserService:IUserService
+    public class UserService : IUserService
     {
         private UserManager<User> userManager;
         private SignInManager<User> singInManager;
         private IPasswordValidator<User> passwordValidator;
         private IPasswordHasher<User> passwordHasher;
+        private RoleManager<IdentityRole> roleManager;
         User user = new User();
         ServiceResult serviceResult = new ServiceResult();
         public UserService(SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
-            IPasswordValidator<User> _passwordValidator)
+            IPasswordValidator<User> _passwordValidator, RoleManager<IdentityRole> _roleManager)
         {
             userManager = _userManager;
             singInManager = _singInManageR;
             passwordHasher = _passwordHasher;
             passwordValidator = _passwordValidator;
+            roleManager = _roleManager;
         }
-        public UserView ListUser(string username)
+        public UserView User(string username)
         {
             UserView userView = new UserView();
             var item = userManager.Users.Where(w => w.UserName == username).FirstOrDefault();
@@ -50,6 +53,7 @@ namespace bookbooking.Service
             if (passValid.Succeeded)
             {
                 var result = await userManager.CreateAsync(user);
+                  await userManager.AddToRoleAsync(user, "User");
                 if (result.Succeeded)
                     serviceResult.Sonuc = true;
                 else

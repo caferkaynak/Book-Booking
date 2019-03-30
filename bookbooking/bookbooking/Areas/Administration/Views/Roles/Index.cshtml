@@ -14,7 +14,6 @@
                 <tr>
                     <th>Role Id</th>
                     <th>Role Name</th>
-                    <th>Users</th>
                     <th></th>
                 </tr>
                 @if (Model.Count() == 0)
@@ -32,11 +31,19 @@
                         <tr>
                             <td>@role.Id</td>
                             <td>@role.Name</td>
-                            <td identity-role="@role.Id"></td>
                             <td>
                                 <form>
-                                    <input type="submit" formmethod="get" asp-action="Update" asp-controller="Roles" class="btn btn-primary" asp-route-id="@role.Id"value="Update">
-                                    <a asp-action="Delete" asp-controller="Roles" class="btn btn-danger" asp-route-id="@role.Id">Delete</a>
+                                    @if (role.Name != "Admin" && role.Name != "User")
+                                    {
+                                        <input type="submit" formmethod="get" asp-action="Update" asp-controller="Roles" class="btn btn-primary" asp-route-id="@role.Id" value="Güncelle">
+                                        <a asp-action="Delete" asp-controller="Roles" class="btn btn-danger" asp-route-id="@role.Id">Sil</a>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-primary" disabled>Güncelle</button>
+                                        <button class="btn btn-danger" disabled>Sil</button>
+                                    }
+
                                 </form>
                                     </td>
                         </tr>

@@ -16,7 +16,7 @@ namespace bookbooking.Service
         Task<ServiceResult> DeleteRole(string id);
         Task<ServiceResult> UpdateRole(IdentityRole model);
     }
-    public class RolesService:IRolesService
+    public class RolesService : IRolesService
     {
         private RoleManager<IdentityRole> roleManager;
         ServiceResult serviceResult = new ServiceResult();
@@ -29,7 +29,7 @@ namespace bookbooking.Service
             ServiceResult serviceResult = new ServiceResult();
             var result = await roleManager.CreateAsync(new IdentityRole(model.Name));
             if (result.Succeeded)
-                serviceResult.Sonuc = true;   
+                serviceResult.Sonuc = true;
             return serviceResult;
         }
         public async Task<IdentityRole> UpdateListRole(string id)
@@ -42,19 +42,40 @@ namespace bookbooking.Service
         {
             ServiceResult serviceResult = new ServiceResult();
             IdentityRole role = await roleManager.FindByIdAsync(model.Id);
-            role.Name = model.Name;
-            var result = await roleManager.UpdateAsync(role);
-            if (result.Succeeded)
-                serviceResult.Sonuc = true;
+            if (role.Name == "Admin" || role.Name == "User")
+            {
+                serviceResult.Sonuc = false;
+                serviceResult.Message = "Admin veya User'ı Değiştiremezsin";
+            }
+            else
+            {
+                role.Name = model.Name;
+                var result = await roleManager.UpdateAsync(role);
+                if (result.Succeeded)
+                {
+                    serviceResult.Sonuc = true;
+                    serviceResult.Message = "Başarılı";
+                }
+                else
+                {
+                    serviceResult.Sonuc = false;
+                    serviceResult.Message = "Başarısız";
+                }
+            }
             return serviceResult;
         }
         public async Task<ServiceResult> DeleteRole(string id)
         {
             ServiceResult serviceResult = new ServiceResult();
             IdentityRole role = await roleManager.FindByIdAsync(id);
-            var result = await roleManager.DeleteAsync(role);
-            if (result.Succeeded)
-                serviceResult.Sonuc = true;
+            if (role.Name == "Admin" || role.Name == "User")
+                serviceResult.Sonuc = false;
+            else
+            {
+                var result = await roleManager.DeleteAsync(role);
+                if (result.Succeeded)
+                    serviceResult.Sonuc = true;
+            }
             return serviceResult;
         }
     }

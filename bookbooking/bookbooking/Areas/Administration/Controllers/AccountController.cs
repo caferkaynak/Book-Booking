@@ -14,14 +14,14 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         private IUserService userService;
         ServiceResult serviceResult = new ServiceResult();
         public AccountController(SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
-            IPasswordValidator<User> _passwordValidator, IUserService _userService)
+            IPasswordValidator<User> _passwordValidator, IUserService _userService,RoleManager<IdentityRole> roleManager)
         {
             userService = _userService;
         }
 
         public IActionResult Index()
         {
-            return View(userService.ListUser(User.Identity.Name));
+            return View(userService.User(User.Identity.Name));
         }
 
         public IActionResult Login()
@@ -39,15 +39,14 @@ namespace bookbooking.Web.Areas.Administration.Controllers
             {
                 serviceResult = await userService.Login(model);
                 if (serviceResult.Sonuc == true)
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToRoute("default", new { controller = "Home", action = "Index" });
             }
             return View();
         }
-        [Route("default")]
         public IActionResult LogOut()
         {
             userService.LogOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToRoute("default" ,new { controller = "Home", action = "Index" });
         }
         public IActionResult SingUp()
         {

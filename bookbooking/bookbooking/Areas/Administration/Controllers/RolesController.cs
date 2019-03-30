@@ -50,17 +50,19 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                await rolesService.UpdateRole(ıdentityRole);
-                if (serviceResult.Sonuc == true)
-                    return RedirectToAction("Index", "Roles");
-                ModelState.AddModelError("Succeeced", "Başarılı");
+                serviceResult = await rolesService.UpdateRole(ıdentityRole);
+                ModelState.AddModelError("Succeeced", serviceResult.Message);
+                return View(ıdentityRole);
             }
             return View(ıdentityRole);
         }
         public async Task<IActionResult> Delete(string id)
         {
             serviceResult = await rolesService.DeleteRole(id);
-            ModelState.AddModelError("Succeeced", serviceResult.Message);
+            if (serviceResult.Sonuc == true)
+                ModelState.AddModelError("Succeeced", "Başarılı");
+            else
+                ModelState.AddModelError("Succeeced", "Admin veya User'ı silemezsiniz");
             return RedirectToAction("Index", "Roles");
         }
     }
