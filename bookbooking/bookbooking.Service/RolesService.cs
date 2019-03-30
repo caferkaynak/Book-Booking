@@ -1,10 +1,9 @@
 ﻿using bookbooking.Common.ViewModels;
+using bookbooking.Common.ViewModels.Role;
 using bookbooking.Common.ViewModels.User;
 using bookbooking.Entity.Entities;
 using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace bookbooking.Service
@@ -15,14 +14,18 @@ namespace bookbooking.Service
         Task<IdentityRole> UpdateListRole(string id);
         Task<ServiceResult> DeleteRole(string id);
         Task<ServiceResult> UpdateRole(IdentityRole model);
+        Task<UserRoleView> UpdateUserRoleList(string id);
+        Task<ServiceResult> UpdateUserRole(UserRoleView model);
     }
     public class RolesService : IRolesService
     {
         private RoleManager<IdentityRole> roleManager;
         ServiceResult serviceResult = new ServiceResult();
-        public RolesService(RoleManager<IdentityRole> _roleManager)
+        private UserManager<User> userManager;
+        public RolesService(RoleManager<IdentityRole> _roleManager, UserManager<User> _userManager)
         {
             roleManager = _roleManager;
+            userManager = _userManager;
         }
         public async Task<ServiceResult> AddRole(IdentityRole model)
         {
@@ -75,6 +78,76 @@ namespace bookbooking.Service
                 var result = await roleManager.DeleteAsync(role);
                 if (result.Succeeded)
                     serviceResult.Sonuc = true;
+            }
+            return serviceResult;
+        }
+        public async Task<UserRoleView> UpdateUserRoleList(string id)
+        {
+            UserRoleView userRoleView = new UserRoleView();
+            List<UserView> member = new List<UserView>();
+            List<UserView> noMember = new List<UserView>();
+            var rol = await roleManager.FindByIdAsync(id);
+            foreach (var user in userManager.Users)
+            {
+                var result = await userManager.IsInRoleAsync(user, rol.Name);
+                if (result == true)
+                {
+                    member.Add(new UserView()
+                    {
+                        Id = user.Id,
+                        Username = user.UserName,
+                        Email = user.Email,
+                        Phone = user.PhoneNumber
+                    });
+                }
+                else
+                {
+                    noMember.Add(new UserView()
+                    {
+                        Id = user.Id,
+                        Username = user.UserName,
+                        Email = user.Email,
+                        Phone = user.PhoneNumber
+                    });
+                }
+            }
+            userRoleView.Member = member;
+            userRoleView.NoMember = noMember;
+            userRoleView.ıdentityRoles = roleManager.Roles;
+            userRoleView.IdentityRole = rol;
+            return userRoleView;
+        }
+        public async Task<ServiceResult> UpdateUserRole(UserRoleView model)
+        {
+            if (model.IdsToAdd != null)
+            {
+                foreach (var userId in model.IdsToAdd)
+                {
+                    var user = await userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        var result = await userManager.AddToRoleAsync(user, model.IdentityRole.Name);
+                        if (!result.Succeeded)
+                        {
+                            serviceResult.Message = "Eklendi";
+                        }
+                    }
+                }
+            }
+            if (model.IdsToDelete != null)
+            {
+                foreach (var userId in model.IdsToDelete)
+                {
+                    var user = await userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        var result = await userManager.RemoveFromRoleAsync(user, model.IdentityRole.Name);
+                        if (!result.Succeeded)
+                        {
+                            serviceResult.Message = "Eklendi";
+                        }
+                    }
+                }
             }
             return serviceResult;
         }

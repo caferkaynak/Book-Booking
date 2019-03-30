@@ -28,7 +28,7 @@ namespace bookbooking
             services.AddTransient<ILibraryService, LibraryService>();
             services.AddTransient<IRolesService, RolesService>();
             services.AddMvc();
-            services.AddAuthenticationCore();
+            services.AddAuthentication();
             services.AddIdentity<User, IdentityRole>()
                    .AddEntityFrameworkStores<ApplicationDbContext>()
                .AddDefaultTokenProviders();

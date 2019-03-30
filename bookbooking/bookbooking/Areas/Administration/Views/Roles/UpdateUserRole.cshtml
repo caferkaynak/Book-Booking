@@ -1,0 +1,90 @@
+﻿@model UserRoleView
+@{
+    ViewData["Title"] = "UpdateUserRole";
+    Layout = "~/Areas/Administration/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col">
+            <div>
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+                <form asp-action="UpdateUserRole" asp-controller="Roles" method="post">
+                    <input type="hidden" asp-for="IdentityRole.Id" />
+                    <input type="hidden" asp-for="IdentityRole.Name" />
+                    <table class="table table-bordered table-striped table-sm m-1 p-1">
+                        <tr class="bg-primary text-white p-1 m-1"><td colspan="4"><h2>Member</h2></td></tr>
+                        <tr>
+                            <th>Kullanıcı Id</th>
+                            <th>Kullanıcı Adı</th>
+                            <th>Maili</th>
+                            <th>Telefonu</th>
+                        </tr>
+                        @if (Model.Member.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    Kullanıcı Yok
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var user in Model.Member)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" name="IdsToDelete" value="@user.Id" />@user.Id</td>
+                                    <td>@user.Username</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Phone</td>
+                                </tr>
+
+                            }
+                        }
+                        <tr><td colspan="4"><input type="submit" class="btn btn-primary" value="Çıkar"></td></tr>
+                    </table>
+                </form>
+            </div>
+            <div>
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <form asp-action="UpdateUserRole" asp-controller="Roles" method="post">
+                    <input type="hidden" asp-for="IdentityRole.Id" />
+                    <input type="hidden" asp-for="IdentityRole.Name" />
+                    <table class="table table-bordered table-striped table-sm m-1 p-1">
+                        <tr class="bg-primary text-white p-1 m-1"><td colspan="4"><h2>No Member</h2></td></tr>
+                        <tr>
+                            <th>Kullanıcı Id</th>
+                            <th>Kullanıcı Adı</th>
+                            <th>Maili</th>
+                            <th>Telefonu</th>
+                        </tr>
+                        @if (Model.NoMember.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    Kullanıcı Yok
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+
+                            foreach (var user in Model.NoMember)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" name="IdsToAdd" value="@user.Id" />@user.Id</td>
+                                    <td>@user.Username</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Phone</td>
+                                </tr>
+
+                            }
+                        }
+                        <tr><td colspan="4"><input type="submit" class="btn btn-primary" value="Ekle"></td></tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

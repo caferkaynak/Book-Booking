@@ -1,13 +1,15 @@
 ﻿using System.Threading.Tasks;
 using bookbooking.Common.ViewModels;
-using bookbooking.Common.ViewModels.User;
+using bookbooking.Common.ViewModels.Role;
 using bookbooking.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
@@ -64,6 +66,23 @@ namespace bookbooking.Web.Areas.Administration.Controllers
             else
                 ModelState.AddModelError("Succeeced", "Admin veya User'ı silemezsiniz");
             return RedirectToAction("Index", "Roles");
+        }
+        public async Task<IActionResult> UpdateUserRole(string id)
+        {
+            UserRoleView userRoleView = new UserRoleView();
+            userRoleView = await rolesService.UpdateUserRoleList(id);
+            return View(userRoleView);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserRole(UserRoleView userRoleView)
+        {
+            if (ModelState.IsValid)
+            {
+               serviceResult = await rolesService.UpdateUserRole(userRoleView); 
+            }
+            ModelState.AddModelError("Hata", "Seçim yapılmadı");
+            userRoleView = await rolesService.UpdateUserRoleList(userRoleView.IdentityRole.Id);
+            return View(userRoleView);
         }
     }
 }

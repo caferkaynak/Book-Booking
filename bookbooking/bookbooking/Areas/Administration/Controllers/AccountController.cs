@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using bookbooking.Service;
 using bookbooking.Common.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
@@ -18,12 +19,11 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         {
             userService = _userService;
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View(userService.User(User.Identity.Name));
         }
-
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated == false)
@@ -50,7 +50,11 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         }
         public IActionResult SingUp()
         {
-            return View();
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Account");
         }
         [HttpPost]
         public async Task<IActionResult> SingUp(UserView model)

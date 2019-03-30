@@ -6,11 +6,9 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col">
-            <div class="bg-primary text-white p-1 m-1">
-                <h2>Role List</h2>
-            </div>
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
             <table class="table table-bordered table-striped table-sm m-1 p-1">
+                <tr class="bg-primary text-white p-1 m-1"><td colspan="4"><h2>Role Listesi</h2></td></tr>
                 <tr>
                     <th>Role Id</th>
                     <th>Role Name</th>
@@ -33,6 +31,7 @@
                             <td>@role.Name</td>
                             <td>
                                 <form>
+                                    <input type="submit" formmethod="get" asp-action="UpdateUserRole" asp-controller="Roles" class="btn btn-secondary" asp-route-id="@role.Id" value="Kullanıcıları Güncelle">
                                     @if (role.Name != "Admin" && role.Name != "User")
                                     {
                                         <input type="submit" formmethod="get" asp-action="Update" asp-controller="Roles" class="btn btn-primary" asp-route-id="@role.Id" value="Güncelle">
@@ -45,14 +44,20 @@
                                     }
 
                                 </form>
-                                    </td>
+                            </td>
                         </tr>
                     }
                 }
+
+                <tr>
+                    <td colspan="4">
+                        <a asp-action="Add" class="btn btn-primary">
+                            Rol Ekle
+                        </a>
+                    </td>
+                </tr>
             </table>
-            <a asp-action="Add" class="btn btn-primary">
-                Create User
-            </a>
+           
         </div>
     </div>
 </div>

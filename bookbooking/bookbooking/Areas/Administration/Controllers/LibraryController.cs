@@ -4,12 +4,14 @@ using bookbooking.Common.ViewModels.Library;
 using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using bookbooking.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
+    [Authorize(Roles = "Admin")]
     public class LibraryController : Controller
     {
         ILibraryService libraryService;

@@ -2,11 +2,13 @@
 using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using bookbooking.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         ICategoryService categoryService;
