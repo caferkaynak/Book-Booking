@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Session;
 
 namespace bookbooking
 {
@@ -28,6 +29,8 @@ namespace bookbooking
             services.AddTransient<ILibraryService, LibraryService>();
             services.AddTransient<IRolesService, RolesService>();
             services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddAuthentication();
             services.AddIdentity<User, IdentityRole>()
                    .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -44,7 +47,8 @@ namespace bookbooking
             }
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseStatusCodePages();
+            app.UseSession();
+            app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -52,7 +56,8 @@ namespace bookbooking
                          template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"); 
+                    template: "{controller=Home}/{action=Index}/{id?}");
+
             });
             SeedData.Seed(app);
         }

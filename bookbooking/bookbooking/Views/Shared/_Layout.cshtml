@@ -30,21 +30,30 @@
     <!-- HEADER -->
     <header>
         <!-- TOP HEADER -->
-        @if (User.Identity.IsAuthenticated == true)
-        {
+        
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i>@ViewBag.User.Phone</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i>@ViewBag.User.Email</a></li>
-                        <li><a href="#"><i class="fa fa-male"></i>@ViewBag.User.Username</a></li>
-                    </ul>
+                        @if (User.Identity.IsAuthenticated == true)
+                        {
+                            <li><a href="#"><i class="fa fa-phone"></i>@ViewBag.User.Phone</a></li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i>@ViewBag.User.Email</a></li>
+                            <li><a href="#"><i class="fa fa-male"></i>@ViewBag.User.Username</a></li>
+                        }
+                        </ul>
                     <ul class="header-links pull-right">
-                        <li><a asp-area="Administration" asp-action="LogOut" asp-controller="Account"><i class="fa fa-user-o"></i>Log Out</a></li>
+                        @if (User.Identity.IsAuthenticated == true)
+                        {
+                            <li><a asp-area="Administration" asp-action="LogOut" asp-controller="Account"><i class="fa fa-user-o"></i>Çıkış</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-area="Administration" asp-action="Login" asp-controller="Account"><i class="fa fa-user-o"></i>Giriş</a></li>
+                        }
                     </ul>
                 </div>
             </div>
-        }
+        
         <!-- /TOP HEADER -->
         <!-- MAIN HEADER -->
         <div id="header">
@@ -164,7 +173,6 @@
                     <li class="active"><a href="#">Anasayfa</a></li>
                     <li><a href="#">Kategoriler</a></li>
                     <li><a href="#">Yazarlar</a></li>
-                    <li><a asp-area="Administration" asp-action="Login" asp-controller="Account">Giriş</a></li>
                 </ul>
                 <!-- /NAV -->
             </div>
