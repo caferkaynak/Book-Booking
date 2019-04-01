@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bookbooking.Data;
 
 namespace bookbooking.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190331150608_addBookRezOp")]
+    partial class addBookRezOp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,8 +153,6 @@ namespace bookbooking.Data.Migrations
                     b.Property<string>("ImageName");
 
                     b.Property<bool>("IsAvailable");
-
-                    b.Property<DateTime>("IsAvailableTime");
 
                     b.Property<string>("Name")
                         .IsRequired();

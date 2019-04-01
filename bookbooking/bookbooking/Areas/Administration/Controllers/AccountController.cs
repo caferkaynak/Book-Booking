@@ -10,15 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
-    public class AccountController : Controller
+    public class AccountController : BaseController<AccountController>
     {
-        private IUserService userService;
         ServiceResult serviceResult = new ServiceResult();
-        public AccountController(SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
-            IPasswordValidator<User> _passwordValidator, IUserService _userService,RoleManager<IdentityRole> roleManager)
-        {
-            userService = _userService;
-        }
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {

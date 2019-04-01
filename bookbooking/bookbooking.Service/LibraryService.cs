@@ -15,7 +15,7 @@ namespace bookbooking.Service
     {
         BookView BookList();
         BookView UpdateBookList(int id);
-        Task<ServiceResult> AddBook(BookView model,IFormFile file);
+        Task<ServiceResult> AddBook(BookView model, IFormFile file);
         Task<ServiceResult> UpdateBook(BookView model, IFormFile file);
         void AddAuthor(BookView model);
         void UpdateAuthor(BookView model);
@@ -36,7 +36,7 @@ namespace bookbooking.Service
             authorRepository = _authorRepository;
         }
         public BookView BookList()
-        {      
+        {
             bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i => i.Author).ToList();
             bookView.Categories = categoryRepository.GetAll().ToList();
             bookView.Authors = authorRepository.GetAll().ToList();
@@ -45,7 +45,7 @@ namespace bookbooking.Service
         public BookView UpdateBookList(int id)
         {
             bookView.Book = bookRepository.GetAll().Where(w => w.Id == id).FirstOrDefault();
-            bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i=>i.Author).ToList();
+            bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i => i.Author).ToList();
             bookView.Categories = categoryRepository.GetAll().ToList();
             bookView.Authors = authorRepository.GetAll().ToList();
             return bookView;
@@ -63,19 +63,23 @@ namespace bookbooking.Service
                     serviceResult.Sonuc = true;
                 }
             }
-                bookRepository.Add(model.Book);
+            bookRepository.Add(model.Book);
             return serviceResult;
         }
         public async Task<ServiceResult> UpdateBook(BookView model, IFormFile file)
         {
-            CurrentDirectoryHelpers.SetCurrentDirectory();
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Image", file.FileName);
-            using (var stream = new FileStream(path, FileMode.Create))
+            if (file != null)
             {
-                await file.CopyToAsync(stream);
-                model.Book.ImageName = file.FileName;
-                serviceResult.Sonuc = true;
+                CurrentDirectoryHelpers.SetCurrentDirectory();
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Image", file.FileName);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    model.Book.ImageName = file.FileName;
+                    serviceResult.Sonuc = true;
+                }
             }
+            serviceResult.Sonuc = true;
             bookRepository.Update(model.Book);
             return serviceResult;
         }

@@ -4,6 +4,7 @@ using bookbooking.Common.ViewModels.Library;
 using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using bookbooking.Service;
+using bookbooking.Web.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +13,9 @@ namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     [Authorize(Roles = "Admin")]
-    public class LibraryController : Controller
+    public class LibraryController : BaseController<LibraryController>
     {
-        ILibraryService libraryService;
-        IRepository<Book> bookRepository;
-        IRepository<Author> authorRepository;
         ServiceResult serviceResult = new ServiceResult();
-        public LibraryController(ILibraryService _libraryService, IRepository<Category> categoryRepository, IRepository
-            <Book> _bookRepository, IRepository<Author> _authorRepository)
-        {
-            libraryService = _libraryService;
-            bookRepository = _bookRepository;
-            authorRepository = _authorRepository;
-        }
         public IActionResult Index()
         {
             return View(libraryService.BookList());

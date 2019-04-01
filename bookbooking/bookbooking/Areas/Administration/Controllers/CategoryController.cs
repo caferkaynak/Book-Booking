@@ -9,13 +9,8 @@ namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     [Authorize(Roles = "Admin")]
-    public class CategoryController : Controller
+    public class CategoryController : BaseController<CategoryController>
     {
-        ICategoryService categoryService;
-        public CategoryController(ICategoryService _categoryService,IRepository<Category> _repository)
-        {
-            categoryService = _categoryService;
-        }
         public IActionResult Index()
         {
             return View(categoryService.CategoryList());

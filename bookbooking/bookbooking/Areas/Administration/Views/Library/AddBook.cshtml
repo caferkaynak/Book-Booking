@@ -34,6 +34,22 @@
                 <div class="form-group">
                     <input type="file" name="file" id="file" class="form-control">
                 </div>
+
+                <div class="form-group">
+                    <select asp-for="Book.IsAvailable" class="form-control">
+                        <option value="">Rezerve Durumu</option>
+                        <option value="@true">Rezerve Edilebilir</option>
+                        <option value="@false">Rezerve Edilemez</option>
+                    </select>
+                </div>
+                @if (true)
+                {
+
+                }
+                <div class="form-group">
+                    <input type="datetime-local" asp-for="Book.IsAvailableTime" class="form-control" />
+                    <label>Rezerve Edilebilir Olacağı Tarih</label>
+                </div>
                 <div class="form-group">
                     <input type="submit" class="form-control" value="Ekle" />
                 </div>

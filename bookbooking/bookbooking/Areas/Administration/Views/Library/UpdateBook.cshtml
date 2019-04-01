@@ -7,11 +7,22 @@
     <div class="card mx-auto">
         <div class="card-body">
             <form asp-action="UpdateBook" asp-controller="Library" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Book.ImageName" />
+                <input type="hidden" asp-for="Book.Id" />
                 <div class="form-group">
                     <h2>Kitap Güncelle</h2>
                 </div>
                 <div class="form-group">
                     <input asp-for="Book.Name" class="form-control" placeholder="Title" />
+                </div>
+                <div class="form-group">
+                    <select asp-for="Book.AuthorId" class="form-control">
+                        <option value="">Yazar Seçin</option>
+                        @foreach (var item in Model.Authors)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
                 </div>
                 <div class="form-group">
                     <select asp-for="Book.CategoryId" class="form-control">
@@ -25,6 +36,18 @@
                 <div class="form-group">
                     <input type="file" name="file" id="file" class="form-control">
                 </div>
+
+                <div class="form-group">
+                    <select asp-for="Book.IsAvailable" class="form-control">
+                        <option value="">Rezerve Durumu</option>
+                        <option value="@true">Rezerve Edilebilir</option>
+                        <option value="@false">Rezerve Edilemez</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="datetime-local" asp-for="Book.IsAvailableTime" class="form-control" />
+                </div>
+                <label>Rezerve Edilebilir Olacağı Tarih</label>
                 <div class="form-group">
                     <input type="submit" class="form-control" value="Update" />
                 </div>

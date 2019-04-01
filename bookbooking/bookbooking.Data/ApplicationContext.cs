@@ -12,5 +12,6 @@ namespace bookbooking.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Card> Cards { get; set; }
     }
 }

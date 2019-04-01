@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace bookbooking.Entity.Entities
 {
@@ -13,5 +14,7 @@ namespace bookbooking.Entity.Entities
         [Required]
         public int AuthorId { get; set; }
         public virtual Author Author { get; set; }
+        public bool IsAvailable { get; set; }
+        public DateTime IsAvailableTime { get; set; }
     }
 }

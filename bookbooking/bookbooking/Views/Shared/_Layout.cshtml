@@ -36,11 +36,11 @@
                     <ul class="header-links pull-left">
                         @if (User.Identity.IsAuthenticated == true)
                         {
-                            <li><a href="#"><i class="fa fa-phone"></i>@ViewBag.User.Phone</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>@ViewBag.User.Email</a></li>
-                            <li><a href="#"><i class="fa fa-male"></i>@ViewBag.User.Username</a></li>
+                                <li><a href="#"><i class="fa fa-phone"></i>@TempData["UserPhone"]</a></li>
+                                <li><a href="#"><i class="fa fa-envelope-o"></i>@TempData["UserEmail"]</a></li>
+                                <li><a href="#"><i class="fa fa-male"></i>@TempData["UserName"]</a></li>
                         }
-                        </ul>
+                    </ul>
                     <ul class="header-links pull-right">
                         @if (User.Identity.IsAuthenticated == true)
                         {
@@ -76,9 +76,9 @@
                             <form>
                                 <select class="input-select">
                                     <option value="" selected disabled>All Categories</option>
-                                    @foreach (var item in ViewBag.Category)
+                                    @foreach (var category1 in TempData["Category"] as IEnumerable<Category>)
                                     {
-                                        <option value="@item.Id">@item.Name</option>
+                                        <option value="@category1.Id">@category1.Name</option>
                                     }
                                 </select>
                                 <input class="input" placeholder="Search here">
@@ -171,7 +171,17 @@
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
                     <li class="active"><a href="#">Anasayfa</a></li>
-                    <li><a href="#">Kategoriler</a></li>
+                    <li>
+                        <a href="#" data-toggle="dropdown">Kategoriler</a>
+                        <ul class="dropdown-menu nav navbar-nav" role="menu" >
+                            <li role="presentation" class="dropdown-item">
+                                @foreach (var category in TempData["Category"] as IEnumerable<Category>)
+                                {
+                                    <a asp-route-id="@category.Id">@category.Name</a>
+                                }
+                            </li>
+                    </ul>
+                    </li>
                     <li><a href="#">Yazarlar</a></li>
                 </ul>
                 <!-- /NAV -->
@@ -204,7 +214,7 @@
                         <div class="footer">
                             <h3 class="footer-title">Kategoriler</h3>
                             <ul class="footer-links">
-                                @foreach (var item in ViewBag.Category)
+                                @foreach (var item in TempData["Category"] as IEnumerable<Category>)
                                 {
                                     <li><a href="#">@item.Name</a></li>
                                 }
@@ -216,7 +226,7 @@
                         <div class="footer">
                             <h3 class="footer-title">Yazarlar</h3>
                             <ul class="footer-links">
-                                @foreach (var author in ViewBag.Author)
+                                @foreach (var author in TempData["Author"] as IEnumerable<Author>)
                                 {
                                     <li><a href="#">@author.Name</a></li>
                                 }

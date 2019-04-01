@@ -3,34 +3,48 @@
     ViewData["Title"] = "Home";
     Layout = "~//Views/Shared/_Layout.cshtml";
 }
-    <!-- SECTION -->
-        <div class="section"> 
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <!-- shop -->
-                    @foreach (var item in Model.Books)
-                    {
-                        <div class="col-md-4 col-xs-6">
-                            <div class="shop">
-                                <div class="shop-img">
-                                    <img src="~/Image/@item.ImageName" alt="" width="220" height="200">
-                                </div>
-                                <div class="shop-body">
-                                    <h3>@item.Name<br>@item.Author.Name</h3>
-                                    <a href="#" class="cta-btn">Rezervasyon <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- shop -->
+            @foreach (var item in Model.Books)
+            {
+                <div class="col-md-4 col-xs-6">
+                    <div class="shop">
+                        <div class="shop-img">
+                            <img src="~/Image/@item.ImageName" alt="" width="220" height="200">
                         </div>
-                    }
-                    <!-- /shop -->
+                        <div class="shop-body">
+                            <h3>@item.Name<br>@item.Author.Name</h3>
+                            @if (User.Identity.IsAuthenticated == true)
+                            {
+                                if (item.IsAvailable == true)
+                                {
+                                    <a href="#" class="cta-btn">Rezervasyon <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="#" class="cta-btn">Sepete Ekle <i class="fa fa-arrow-circle-right"></i></a>
+                                    <label><font color="white">Kiralanabilir</font></label>
+                                }
+                                else
+                                {
+                                    <label><font color="white">Kiralanamaz</font></label>
+                                    <label><font color="white">@item.IsAvailableTime</font></label>
+                                }
+                            }
+
+                        </div>
+                    </div>
                 </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
+            }
+            <!-- /shop -->
         </div>
-    @*<div class="section">
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+@*<div class="section">
         <!-- container -->
         <div class="container">
             <!-- row -->
@@ -210,4 +224,4 @@
         </div>
         <!-- /container -->
     </div>*@
-    <!-- /SECTION -->
+<!-- /SECTION -->

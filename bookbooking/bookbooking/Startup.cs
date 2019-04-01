@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace bookbooking
 {
@@ -28,8 +29,11 @@ namespace bookbooking
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ILibraryService, LibraryService>();
             services.AddTransient<IRolesService, RolesService>();
+            services.AddTransient<ICardService, CardService>();
+            // services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddMvc();
-            services.AddDistributedMemoryCache();
+            //services.AddMemoryCache();
+            //services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddAuthentication();
             services.AddIdentity<User, IdentityRole>()
@@ -48,6 +52,7 @@ namespace bookbooking
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseSession();
+            app.UseCookiePolicy();
             app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
             app.UseMvc(routes =>
             {

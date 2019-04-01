@@ -1,47 +1,38 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using bookbooking.Entity.Entities;
-using bookbooking.Service;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Linq;
+using bookbooking.Common.ViewModels.Library;
+using bookbooking.Web.Areas.Administration.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookbooking.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController<HomeController>
     {
-        private ICategoryService categoryService;
-        IUserService userService;
-        private ILibraryService libraryService;
-        public HomeController(ICategoryService _categoryService, ILibraryService _libraryService, SignInManager<User> _singInManageR, UserManager<User> _userManager, IPasswordHasher<User> _passwordHasher,
-            IPasswordValidator<User> _passwordValidator, RoleManager<IdentityRole> _roleManager,IUserService _userService)
-        {   
-            categoryService = _categoryService;
-            libraryService = _libraryService;
-            userService = _userService;
-        }
-        public IActionResult Index() // düzeltilecek base controller oluşturulacak
+        public IActionResult Index(int? id) // düzeltilecek base controller oluşturulacak
         {
-            ViewBag.Category = new List<Category>();
-            ViewBag.Author = new List<Author>();
-            ViewBag.Category = categoryService.CategoryList().Categories.ToList();
-            ViewBag.Author = libraryService.BookList().Authors.ToList();
-            if (User.Identity.IsAuthenticated==true)
+            //TempData["Category"] = categoryService.CategoryList().Categories.ToList();
+            //TempData["Author"] = libraryService.BookList().Authors.ToList();
+            //BookView bookView = new BookView();
+            //if (User.Identity.IsAuthenticated==true)
+            //TempData["UserPhone"] = userService.User(User.Identity.Name).Phone;
+            //TempData["UserName"] = userService.User(User.Identity.Name).Username;
+            //TempData["UserEmail"] = userService.User(User.Identity.Name).Email;
+            doldur();
+            BookView bookView = new BookView();
+            if (id == null)
             {
-                ViewBag.User = userService.User(User.Identity.Name);
+                bookView = libraryService.BookList();
+                return View(bookView);
             }
-            return View(libraryService.BookList());
+            else
+            {
+                bookView = libraryService.BookList();
+                bookView.Books = libraryService.BookList().Books = libraryService.BookList().Books.Where(w => w.CategoryId == id).ToList();
+                return View(bookView);
+            }
+
         }
         public IActionResult Error(int? statusCode = null)
         {
-            ViewBag.Category = new List<Category>();
-            ViewBag.Author = new List<Author>();
-            ViewBag.Category = categoryService.CategoryList().Categories.ToList();
-            ViewBag.Author = libraryService.BookList().Authors.ToList();
-            if (User.Identity.IsAuthenticated == true)
-            {
-                ViewBag.User = userService.User(User.Identity.Name);
-            }
             if (statusCode.HasValue)
             {
                 if (statusCode.Value == 404 || statusCode.Value == 500)

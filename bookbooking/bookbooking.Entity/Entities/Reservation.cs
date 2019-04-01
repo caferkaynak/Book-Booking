@@ -10,6 +10,5 @@ namespace bookbooking.Entity.Entities
         public virtual Book Book { get; set; }
         public DateTime StartReservationTime { get; set; }
         public DateTime FinishReservationTime { get; set; }
-        public bool IsAvailable { get; set; }
     }
 }

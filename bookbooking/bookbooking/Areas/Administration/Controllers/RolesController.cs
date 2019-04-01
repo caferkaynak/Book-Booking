@@ -10,19 +10,12 @@ namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     [Authorize(Roles = "Admin")]
-    public class RolesController : Controller
+    public class RolesController : BaseController<RolesController>
     {
-        private RoleManager<IdentityRole> roleManager;
         ServiceResult serviceResult = new ServiceResult();
-        private IRolesService rolesService;
-        public RolesController(RoleManager<IdentityRole> _roleManager, IRolesService _rolesService)
-        {
-            roleManager = _roleManager;
-            rolesService = _rolesService;
-        }
         public IActionResult Index()
         {
-            return View(roleManager.Roles);
+            return View(rolesManager.Roles);
         }
         public IActionResult Add()
         {
