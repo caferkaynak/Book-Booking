@@ -1,14 +1,13 @@
 ﻿using bookbooking.Data;
 using bookbooking.Entity.Entities;
 using bookbooking.Service;
+using bookbooking.Web.Areas.Administration.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Session;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace bookbooking
 {
@@ -26,14 +25,14 @@ namespace bookbooking
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddSingleton<IUserService,UserService>();
-            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddSingleton<ICategoryService, CategoryService>();
             services.AddTransient<ILibraryService, LibraryService>();
             services.AddTransient<IRolesService, RolesService>();
             services.AddTransient<ICardService, CardService>();
             // services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.AddMvc();
             //services.AddMemoryCache();
-            //services.AddDistributedMemoryCache();
+            services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddAuthentication();
             services.AddIdentity<User, IdentityRole>()
@@ -65,6 +64,7 @@ namespace bookbooking
 
             });
             SeedData.Seed(app);
+            BaseController baseController = new BaseController();
         }
     }
 }

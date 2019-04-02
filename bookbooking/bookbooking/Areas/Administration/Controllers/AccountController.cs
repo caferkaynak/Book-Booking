@@ -12,7 +12,6 @@ namespace bookbooking.Web.Areas.Administration.Controllers
     [Area("Administration")]
     public class AccountController : BaseController<AccountController>
     {
-        ServiceResult serviceResult = new ServiceResult();
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
@@ -31,16 +30,19 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                serviceResult = await userService.Login(model);
-                if (serviceResult.Sonuc == true)
+                if (userManager != null)
+                {
+                    ServiceResult serviceResult = await userService.Login(model);
+                    if (serviceResult.Sonuc == true)
                     return RedirectToRoute("default", new { controller = "Home", action = "Index" });
+                }
             }
             return View();
         }
         public IActionResult LogOut()
         {
             userService.LogOut();
-            return RedirectToRoute("default" ,new { controller = "Home", action = "Index" });
+            return RedirectToRoute("default", new { controller = "Home", action = "Index" });
         }
         public IActionResult SingUp()
         {
@@ -55,7 +57,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                serviceResult = await userService.AddUser(model);
+                ServiceResult serviceResult = await userService.AddUser(model);
                 if (serviceResult.Sonuc == true)
                     return RedirectToAction("Login", "Account");
             }

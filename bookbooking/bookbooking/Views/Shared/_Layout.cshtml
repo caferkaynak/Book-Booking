@@ -73,7 +73,7 @@
                     <!-- SEARCH BAR -->
                     <div class="col-md-6">
                         <div class="header-search">
-                            <form>
+                            <form asp-action="Index" asp-controller="Home">
                                 <select class="input-select">
                                     <option value="" selected disabled>All Categories</option>
                                     @foreach (var category1 in TempData["Category"] as IEnumerable<Category>)
@@ -175,9 +175,12 @@
                         <a href="#" data-toggle="dropdown">Kategoriler</a>
                         <ul class="dropdown-menu nav navbar-nav" role="menu" >
                             <li role="presentation" class="dropdown-item">
+
                                 @foreach (var category in TempData["Category"] as IEnumerable<Category>)
                                 {
-                                    <a asp-route-id="@category.Id">@category.Name</a>
+                                    <form>
+                                        <a asp-action="Index" asp-controller="Home" method="get" asp-route-id="@category.Id">@category.Name</a>
+                                    </form>
                                 }
                             </li>
                     </ul>

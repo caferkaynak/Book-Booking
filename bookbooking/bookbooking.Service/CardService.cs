@@ -9,7 +9,7 @@ namespace bookbooking.Service
     public interface ICardService
     {
         CardView CardList();
-        void AddCard(CardView card);
+        void AddCard(Card card);
         void DeleteCard(CardView model);
     }
     public class CardService :ICardService
@@ -25,9 +25,9 @@ namespace bookbooking.Service
             cardView.Cards = cardRepository.GetAll().Include(i => i.User).Include(i => i.Book).ToList();
             return cardView;
         }
-        public void AddCard(CardView card)
+        public void AddCard(Card card)
         {
-            cardRepository.Add(card.Card);
+            cardRepository.Add(card);
         }
         public void DeleteCard(CardView model)
         {

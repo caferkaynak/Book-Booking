@@ -10,5 +10,7 @@ namespace bookbooking.Common.ViewModels.Library
         public List<Entity.Entities.Category> Categories { get; set; }
         public List<Author> Authors { get; set; }
         public Author Author { get; set; }
+        public Card Card { get; set; }
+        public int BookId { get; set; }
     }
 }
