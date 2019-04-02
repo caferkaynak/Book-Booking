@@ -12,8 +12,7 @@ namespace bookbooking.Web.Controllers
         {
             StartTemp();
             BookView bookView = new BookView();
-            CardView cardView = new CardView();
-            cardView = cardService.CardList(User.Identity.Name);
+            bookView.Cards = libraryService.BookList(User.Identity.Name).Cards;
             if (id == null)
             {
                 bookView = libraryService.BookList();

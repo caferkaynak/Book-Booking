@@ -12,8 +12,9 @@ using System.Threading.Tasks;
 namespace bookbooking.Service
 {
     public interface ILibraryService
-    {
+    { 
         BookView BookList();
+        BookView BookList(string username);
         BookView UpdateBookList(int id);
         Task<ServiceResult> AddBook(BookView model, IFormFile file);
         Task<ServiceResult> UpdateBook(BookView model, IFormFile file);
@@ -42,7 +43,14 @@ namespace bookbooking.Service
         }
         public BookView BookList()
         {
-            bookView.Cards = cardRepository.GetAll().Include(i => i.Book).Include(i => i.User).ToList();
+            bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i => i.Author).ToList();
+            bookView.Categories = categoryRepository.GetAll().ToList();
+            bookView.Authors = authorRepository.GetAll().ToList();
+            return bookView;
+        }
+        public BookView BookList(string username)
+        {
+            bookView.Cards = cardRepository.GetAll().Include(i => i.Book).Include(i => i.User).Where(w => w.User.UserName == username).ToList();
             bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i => i.Author).ToList();
             bookView.Categories = categoryRepository.GetAll().ToList();
             bookView.Authors = authorRepository.GetAll().ToList();
