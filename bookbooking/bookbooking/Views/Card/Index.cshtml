@@ -9,107 +9,46 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            <div class="col-md-7">
-                <!-- Billing Details -->
-                <div class="billing-details">
-                    <div class="section-title">
-                        <h3 class="title">Billing address</h3>
-                    </div>
-                    @if (Model.Cards.Count == 0)
-                    {
-                        <label> Sepet Boş</label>
-                    }
-                    @foreach (var item in Model.Cards)
-                    {
-                        <div class="col-md-8 col-xs-6">
-                            <div class="shop">
-                                <div class="shop-img">
-                                    <img src="~/Image/@item.Book.ImageName" alt="" width="220" height="200">
-                                </div>
-                                <div class="shop-body">
-                                    <h3>@item.Book.Name<br>@item.Book.Author.Name</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-xs-6">
-                            <input type="checkbox" name="Is"/>
-                        </div>
-                    }
-                </div>
-                <!-- /Billing Details -->
-
-
+            <div class="col-md-4">
+               
             </div>
             <!-- Order Details -->
-            <div class="col-md-5 order-details">
+            <div class="col-md-4 order-details">
                 <div class="section-title text-center">
-                    <h3 class="title">Your Order</h3>
+                    <h3 class="title">Sepettekiler</h3>
                 </div>
-                <div class="order-summary">
-                    <div class="order-col">
-                        <div><strong>PRODUCT</strong></div>
-                        <div><strong>TOTAL</strong></div>
+                <form method="post">
+                    <div class="order-summary">
+                        @if (Model.Cards.Count == 0)
+                        {
+                            <label> Sepet Boş</label>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.Cards)
+                            {
+                                <div class="shop">
+                                    <div class="shop-img">
+                                        <img src="~/Image/@item.Book.ImageName" alt="" width="220" height="200">
+                                    </div>
+                                    <div class="shop-body">
+                                        <h3>@item.Book.Name<br>@item.Book.Author.Name</h3>
+                                        <div class="checkbox">
+                                            <label style="font-size: 2em;color:white">
+                                                <input type="checkbox" name="IdsToDelete" value="@item.Id">
+                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                                Seç
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
                     </div>
-                    <div class="order-products">
-                        <div class="order-col">
-                            <div>1x Product Name Goes Here</div>
-                            <div>$980.00</div>
-                        </div>
-                        <div class="order-col">
-                            <div>2x Product Name Goes Here</div>
-                            <div>$980.00</div>
-                        </div>
+                    <div>
+                        <center><input type="submit" asp-action="RemoveCard" asp-controller="Card" class="primary-btn order-submit" value="Seçilenleri Temizle" /></center>
                     </div>
-                    <div class="order-col">
-                        <div>Shiping</div>
-                        <div><strong>FREE</strong></div>
-                    </div>
-                    <div class="order-col">
-                        <div><strong>TOTAL</strong></div>
-                        <div><strong class="order-total">$2940.00</strong></div>
-                    </div>
-                </div>
-                <div class="payment-method">
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-1">
-                        <label for="payment-1">
-                            <span></span>
-                            Direct Bank Transfer
-                        </label>
-                        <div class="caption">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-2">
-                        <label for="payment-2">
-                            <span></span>
-                            Cheque Payment
-                        </label>
-                        <div class="caption">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                    <div class="input-radio">
-                        <input type="radio" name="payment" id="payment-3">
-                        <label for="payment-3">
-                            <span></span>
-                            Paypal System
-                        </label>
-                        <div class="caption">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-checkbox">
-                    <input type="checkbox" id="terms">
-                    <label for="terms">
-                        <span></span>
-                        I've read and accept the <a href="#">terms & conditions</a>
-                    </label>
-                </div>
-                <a href="#" class="primary-btn order-submit">Place order</a>
-            </div>
+                </form>
             <!-- /Order Details -->
         </div>
         <!-- /row -->

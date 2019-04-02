@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace bookbooking.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class CardController : BaseController<CardController>
-    {
-        
+    { 
         CardView cardView = new CardView();
         public IActionResult Index()
         {
@@ -29,13 +27,17 @@ namespace bookbooking.Web.Controllers
                 Card card = new Card();
                 card = model.Card;
                 cardService.AddCard(card);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Card");
         }
-        public IActionResult RemoveCard(int[] cards)
+        [HttpPost]
+        public IActionResult RemoveCard(CardView cardView)
         {
-            cardView.IdsToDelete = cards;
-            cardService.DeleteCard(cardView);
-            return View();
+            if (cardView.IdsToDelete!=null)
+            {
+                cardService.DeleteCard(cardView);
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Card");
         }
     }
 }

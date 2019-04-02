@@ -49,7 +49,7 @@ namespace bookbooking.Service
         {
             foreach (var bookId in model.IdsToDelete)
             {
-                var card = cardRepository.GetAll().Where(w => w.BookId == bookId).FirstOrDefault();
+                var card = cardRepository.GetAll().Where(w => w.Id == w.Id).FirstOrDefault();
                 cardRepository.Remove(card);
             }
         }
