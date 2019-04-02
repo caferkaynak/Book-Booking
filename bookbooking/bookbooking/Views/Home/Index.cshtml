@@ -10,39 +10,58 @@
         <!-- row -->
         <div class="row">
             <!-- shop -->
-            
-                @foreach (var item in Model.Books)
-                {
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="~/Image/@item.ImageName" alt="" width="220" height="200">
-                            </div>
-                            <div class="shop-body">
-                                <h3>@item.Name<br>@item.Author.Name</h3>
-                                @if (User.Identity.IsAuthenticated == true)
+
+            @foreach (var item in Model.Books)
+            {
+                <div class="col-md-4 col-xs-6">
+                    <div class="shop">
+                        <div class="shop-img">
+                            <img src="~/Image/@item.ImageName" alt="" width="220" height="200">
+                        </div>
+                        <div class="shop-body">
+                            <h3>@item.Name<br>@item.Author.Name</h3>
+                            @if (User.Identity.IsAuthenticated == true)
+                            {
+                                if (item.IsAvailable == true)
+
                                 {
-                                    if (item.IsAvailable == true)
-                                        
-                                    {   
-                                <form method="post" asp-action="addCard" asp-controller="Card">
-                                    <input type="hidden" asp-for="Card.BookId" value="@item.Id" />
-                                    <button type="submit"  class="text">Sepete Ekle <i class="fa fa-arrow-circle-right"></i></button><br />
-                                    <label><font color="white">Kiralanabilir</font></label>
-                                </form>
-                                    }
-                                    else
-                                    {
+                                    <form method="post" asp-action="addCard" asp-controller="Card">
+                                        <input type="hidden" asp-for="Card.BookId" value="@item.Id" />
+                                        @foreach (var card in Model.Cards)
+                                        {
+                                            if (card.BookId == item.Id)
+                                            {
+                                                Model.IsCard = true;
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                Model.IsCard = false;
+                                            }
+                                        }
+                                        @if (Model.IsCard == true)
+                                        {
+                                            <label class="text">Sepete Ekli <i class="fa fa-arrow-circle-right"></i></label><br />
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="text">Sepete Ekle <i class="fa fa-arrow-circle-right"></i></button><br />
+                                        }
+                                        <label><font color="white">Kiralanabilir</font></label>
+                                    </form>
+                                }
+                                else
+                                {
                                     <label><font color="white">Kiralanamaz</font></label>
                                     <label><font color="white">@item.IsAvailableTime</font></label>
-                                    }
-                                    }
+                                }
+                            }
 
-</div>
                         </div>
                     </div>
-                }
-            
+                </div>
+            }
+
             <!-- /shop -->
         </div>
         <!-- /row -->

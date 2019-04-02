@@ -15,23 +15,26 @@
                     <div class="section-title">
                         <h3 class="title">Billing address</h3>
                     </div>
-                  @if (Model.Cards.Count==0)
-                  {
-                      <label> Sepet Boş</label>
-                  }
-                        @foreach (var item in Model.Cards)
-                        {
-                    <div class="col-md-8 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="~/Image/@item.Book.ImageName" alt="" width="220" height="200">
-                            </div>
-                            <div class="shop-body">
-                                <h3>@item.Book.Name<br>@item.Book.Author.Name</h3>
+                    @if (Model.Cards.Count == 0)
+                    {
+                        <label> Sepet Boş</label>
+                    }
+                    @foreach (var item in Model.Cards)
+                    {
+                        <div class="col-md-8 col-xs-6">
+                            <div class="shop">
+                                <div class="shop-img">
+                                    <img src="~/Image/@item.Book.ImageName" alt="" width="220" height="200">
+                                </div>
+                                <div class="shop-body">
+                                    <h3>@item.Book.Name<br>@item.Book.Author.Name</h3>
+                                </div>
                             </div>
                         </div>
-                    </div> 
-                        }
+                        <div class="col-md-4 col-xs-6">
+                            <input type="checkbox" name="Is"/>
+                        </div>
+                    }
                 </div>
                 <!-- /Billing Details -->
 

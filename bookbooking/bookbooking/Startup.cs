@@ -64,7 +64,6 @@ namespace bookbooking
 
             });
             SeedData.Seed(app);
-            BaseController baseController = new BaseController();
         }
     }
 }

@@ -27,16 +27,22 @@ namespace bookbooking.Service
         private IRepository<Book> bookRepository;
         private IRepository<Category> categoryRepository;
         private IRepository<Author> authorRepository;
+        private IRepository<Card> cardRepository;
         ServiceResult serviceResult = new ServiceResult();
         BookView bookView = new BookView();
-        public LibraryService(IRepository<Book> _bookRepository, IRepository<Category> _categoryRepository, IRepository<Author> _authorRepository)
+        public LibraryService(IRepository<Book> _bookRepository, 
+            IRepository<Category> _categoryRepository, 
+            IRepository<Author> _authorRepository,
+            IRepository<Card> _cardRepository)
         {
             bookRepository = _bookRepository;
             categoryRepository = _categoryRepository;
             authorRepository = _authorRepository;
+            cardRepository = _cardRepository;
         }
         public BookView BookList()
         {
+            bookView.Cards = cardRepository.GetAll().Include(i => i.Book).Include(i => i.User).ToList();
             bookView.Books = bookRepository.GetAll().Include(i => i.Category).Include(i => i.Author).ToList();
             bookView.Categories = categoryRepository.GetAll().ToList();
             bookView.Authors = authorRepository.GetAll().ToList();

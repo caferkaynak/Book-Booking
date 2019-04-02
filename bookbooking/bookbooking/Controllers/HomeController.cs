@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using bookbooking.Common.ViewModels.CardV;
 using bookbooking.Common.ViewModels.Library;
 using bookbooking.Web.Areas.Administration.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -11,17 +12,19 @@ namespace bookbooking.Web.Controllers
         {
             StartTemp();
             BookView bookView = new BookView();
-                if (id == null)
-                {
-                    bookView = libraryService.BookList();
-                    return View(bookView);
-                }
-                else
-                {
-                    bookView = libraryService.BookList();
-                    bookView.Books = libraryService.BookList().Books = libraryService.BookList().Books.Where(w => w.CategoryId == id).ToList();
-                    return View(bookView);
-                }
+            CardView cardView = new CardView();
+            cardView = cardService.CardList(User.Identity.Name);
+            if (id == null)
+            {
+                bookView = libraryService.BookList();
+                return View(bookView);
+            }
+            else
+            {
+                bookView = libraryService.BookList();
+                bookView.Books = libraryService.BookList().Books = libraryService.BookList().Books.Where(w => w.CategoryId == id).ToList();
+                return View(bookView);
+            }
         }
         public IActionResult Error(int? statusCode = null)
         {

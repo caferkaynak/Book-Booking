@@ -39,6 +39,8 @@ namespace bookbooking.Web.Areas.Administration.Controllers
             TempData["Author"] = libraryService.BookList().Authors.ToList();
             if (User.Identity.IsAuthenticated == true)
             {
+                TempData["CardList"] = cardService.CardList(User.Identity.Name).Cards;
+                TempData["CardCount"] = cardService.CardList(User.Identity.Name).Cards.Count();
                 TempData["UserPhone"] = userService.User(User.Identity.Name).Phone;
                 TempData["UserName"] = userService.User(User.Identity.Name).Username;
                 TempData["UserEmail"] = userService.User(User.Identity.Name).Email;
