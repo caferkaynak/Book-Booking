@@ -13,7 +13,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     [Authorize(Roles = "Admin")]
-    public class LibraryController : BaseController<LibraryController>
+    public class LibraryController : BaseController
     {
         ServiceResult serviceResult = new ServiceResult();
         public IActionResult Index()
@@ -29,17 +29,17 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (file==null)
+                if (file == null)
                 {
                     ModelState.AddModelError("NullFile", "Dosya Seçilmedi");
                     return View(libraryService.BookList());
                 }
                 else
-                { 
-                serviceResult = await libraryService.AddBook(model, file);
-                if (serviceResult.Sonuc == true)
-                    ModelState.AddModelError("Succeeded", "Kitap Eklendi");
-                return View(libraryService.BookList());
+                {
+                    serviceResult = await libraryService.AddBook(model, file);
+                    if (serviceResult.Sonuc == true)
+                        ModelState.AddModelError("Succeeded", "Kitap Eklendi");
+                    return View(libraryService.BookList());
                 }
             }
             return View(libraryService.BookList());
@@ -96,10 +96,9 @@ namespace bookbooking.Web.Areas.Administration.Controllers
         [HttpPost]
         public IActionResult RemoveAuthor(BookView model)
         {
-            if (ModelState.IsValid)
+            if (model.Author.Id != 0)
             {
                 libraryService.RemoveAuthor(model);
-                return RedirectToAction("UpdateAuthor", "Library");
             }
             return RedirectToAction("UpdateAuthor", "Library");
         }

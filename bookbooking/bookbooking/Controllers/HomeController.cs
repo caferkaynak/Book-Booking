@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bookbooking.Web.Controllers
 {
-    public class HomeController : BaseController<HomeController>
+    public class HomeController : BaseController
     {
         public IActionResult Index(int? id)
         {

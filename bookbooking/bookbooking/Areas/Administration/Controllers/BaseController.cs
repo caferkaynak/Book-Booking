@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
-    public abstract class BaseController<T> : Controller where T : BaseController<T>
+    public abstract class BaseController:Controller
     {
         private SignInManager<User> _singInManageR;
         private UserManager<User> _userManager;

@@ -111,7 +111,7 @@ namespace bookbooking.Service
         }
         public void RemoveAuthor(BookView model)
         {
-            authorRepository.Remove(model.Author);
+            authorRepository.Remove(authorRepository.GetAll().Where(W=>W.Id==model.Author.Id).FirstOrDefault());
         }
     }
 }

@@ -9,7 +9,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     [Authorize(Roles = "Admin")]
-    public class CategoryController : BaseController<CategoryController>
+    public class CategoryController : BaseController
     {
         public IActionResult Index()
         {

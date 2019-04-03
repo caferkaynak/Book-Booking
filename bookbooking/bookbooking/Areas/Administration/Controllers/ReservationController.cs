@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class ReservationController : BaseController<ReservationController>
+    public class ReservationController : BaseController
     {
         public IActionResult Index()
         {

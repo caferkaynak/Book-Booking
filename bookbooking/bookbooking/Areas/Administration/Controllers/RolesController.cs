@@ -10,7 +10,7 @@ namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     [Authorize(Roles = "Admin")]
-    public class RolesController : BaseController<RolesController>
+    public class RolesController : BaseController
     {
         ServiceResult serviceResult = new ServiceResult();
         public IActionResult Index()

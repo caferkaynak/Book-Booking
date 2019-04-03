@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace bookbooking.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
-    public class AccountController : BaseController<AccountController>
+    public class AccountController : BaseController
     {
         [Authorize(Roles = "Admin")]
         public IActionResult Index()

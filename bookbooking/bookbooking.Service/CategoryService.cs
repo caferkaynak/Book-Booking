@@ -35,7 +35,7 @@ namespace bookbooking.Service
         }
         public void RemoveCategory(CategoryView model)
         {
-            categoryRepository.Remove(model.Category);
+            categoryRepository.Remove(categoryRepository.GetAll().Where(w => w.Id == model.Category.Id).FirstOrDefault());
         }
     }
 }

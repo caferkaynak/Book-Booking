@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace bookbooking.Web.Controllers
 {
-    public class CardController : BaseController<CardController>
+    public class CardController : BaseController
     { 
         CardView cardView = new CardView();
         public IActionResult Index()
